@@ -1,0 +1,13 @@
+{
+  "name": "ken-mcp",
+  "version": "1.0.0",
+  "description": "MCP server that serves Ken's Thompson-mode instructions as a prompt and a tool.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": { "test": "node --test ./test/*.test.js" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "zod": "^3.23.0"
+  }
+}

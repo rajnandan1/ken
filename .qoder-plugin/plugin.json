@@ -1,0 +1,16 @@
+{
+  "name": "ken",
+  "version": "1.0.0",
+  "description": "Thompson-mode systems discipline. Think first, build bottom-up, brute force until proven, throw it out and rewrite it.",
+  "author": {
+    "name": "Raj Nandan Sharma",
+    "url": "https://github.com/rajnandan1"
+  },
+  "homepage": "https://github.com/rajnandan1/ken",
+  "repository": "https://github.com/rajnandan1/ken",
+  "license": "MIT",
+  "keywords": ["thompson", "brute-force", "rewrite", "code-review", "productivity"],
+  "skills": "./skills/",
+  "rules": "./.qoder/rules/",
+  "hooks": "./hooks/qoder-hooks.json"
+}

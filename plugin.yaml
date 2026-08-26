@@ -1,0 +1,21 @@
+name: ken
+version: 1.0.0
+description: Thompson-mode systems discipline for Hermes Agent, always-on context, bundled skills, and slash commands.
+author: Raj Nandan Sharma
+provides_hooks:
+  - pre_llm_call
+  - pre_gateway_dispatch
+provides_commands:
+  - ken
+  - ken-review
+  - ken-audit
+  - ken-debt
+  - ken-gain
+  - ken-help
+provides_skills:
+  - ken
+  - ken-review
+  - ken-audit
+  - ken-debt
+  - ken-gain
+  - ken-help

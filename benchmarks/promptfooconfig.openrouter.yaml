@@ -1,0 +1,39 @@
+# Ken benchmark via OpenRouter: one key, cross-vendor models.
+#
+#   Run:  OPENROUTER_API_KEY=... npx promptfoo@latest eval -c benchmarks/promptfooconfig.openrouter.yaml --repeat 3
+#
+# Same three arms and five tasks as promptfooconfig.yaml; providers routed
+# through OpenRouter so a single key covers Anthropic, OpenAI, and Google.
+description: "Ken vs ponytail vs no-skill via OpenRouter (haiku-4.5, gpt-5.4-mini, gemini-3.5-flash). LOC + correctness gate."
+
+providers:
+  - id: openrouter:anthropic/claude-haiku-4.5
+    config: { max_tokens: 8192, temperature: 1 }
+  - id: openrouter:openai/gpt-5.4-mini
+    config: { max_tokens: 8192 }
+  - id: openrouter:google/gemini-3.5-flash
+    config: { max_tokens: 8192, temperature: 1 }
+
+prompts:
+  - id: file://arms/baseline.js
+    label: baseline (no skill)
+  - id: file://arms/ponytail.js
+    label: ponytail
+  - id: file://arms/ken.js
+    label: ken
+
+defaultTest:
+  assert:
+    - type: javascript
+      value: file://loc.js
+      metric: code_loc
+    - type: javascript
+      value: file://correctness.js
+      metric: correct
+
+tests:
+  - vars: { task: "Write me a Python function that validates email addresses." }
+  - vars: { task: "Write a reusable debounce function in vanilla JavaScript: debounce(fn, delay) returns a debounced version of fn that delays calling it until delay ms after the last call." }
+  - vars: { task: "Write Python code that reads sales.csv and sums the 'amount' column." }
+  - vars: { task: "Build me a countdown timer component in React that counts down from a given number of seconds." }
+  - vars: { task: "Add rate limiting to my FastAPI endpoint so users can't spam it." }

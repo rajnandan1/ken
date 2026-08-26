@@ -1,0 +1,28 @@
+# Secrets, never commit API keys
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# promptfoo eval artifacts
+.promptfoo/
+benchmarks/output*
+benchmarks/benchmark-local-results.json
+
+# Python
+__pycache__/
+
+# agentic benchmark workspaces (agent output, kept locally for inspection)
+benchmarks/agentic/runs/
+
+# Claude Code local settings (machine-specific permission grants)
+.claude/settings.local.json
+
+# local-only: ponytail reference checkout, wayfinder tracker, domain glossary
+tmp/
+.scratch/
+CONTEXT.md
+
+.DS_Store

@@ -1,0 +1,32 @@
+{
+  "name": "ken",
+  "version": "1.0.0",
+  "description": "Thompson-mode systems discipline. Think first, build bottom-up, brute force until proven, throw it out and rewrite it.",
+  "author": {
+    "name": "Raj Nandan Sharma",
+    "url": "https://github.com/rajnandan1"
+  },
+  "homepage": "https://github.com/rajnandan1/ken",
+  "repository": "https://github.com/rajnandan1/ken",
+  "license": "MIT",
+  "keywords": ["thompson", "brute-force", "rewrite", "code-review", "productivity"],
+  "skills": "./skills/",
+  "hooks": "./hooks/claude-codex-hooks.json",
+  "interface": {
+    "displayName": "Ken",
+    "shortDescription": "Thompson-mode systems discipline",
+    "longDescription": "Think first, steal proven ideas, build bottom-up from primitives you fully understand, brute force until measured, rewrite over patch.",
+    "developerName": "Raj Nandan Sharma",
+    "category": "Productivity",
+    "capabilities": ["Instructions", "Lifecycle hooks"],
+    "websiteURL": "https://github.com/rajnandan1/ken",
+    "defaultPrompt": [
+      "Use Ken mode for this task.",
+      "Review this diff for rot and translate-only layers.",
+      "Brute force this, then name the ceiling."
+    ],
+    "brandColor": "#111111",
+    "composerIcon": "./assets/logo.svg",
+    "logo": "./assets/logo.svg"
+  }
+}

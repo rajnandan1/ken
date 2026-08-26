@@ -1,0 +1,41 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/ken-activate.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading ken mode..."
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/ken-subagent.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading ken mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/ken-mode-tracker.js\"",
+            "timeout": 5,
+            "statusMessage": "Tracking ken mode..."
+          }
+        ]
+      }
+    ]
+  }
+}

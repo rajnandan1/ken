@@ -1,0 +1,20 @@
+{
+  "name": "ken",
+  "description": "Thompson-mode systems discipline for AI agents. Try it, and if it doesn't work, throw it out and do it again.",
+  "owner": {
+    "name": "Raj Nandan Sharma",
+    "url": "https://github.com/rajnandan1"
+  },
+  "plugins": [
+    {
+      "name": "ken",
+      "description": "Think first, steal proven ideas, build bottom-up, brute force until measured, rewrite over patch.",
+      "source": "./",
+      "category": "productivity",
+      "tags": ["thompson", "brute-force", "rewrite", "code-review", "productivity"],
+      "commands": "commands/",
+      "skills": "skills/",
+      "hooks": "hooks/copilot-hooks.json"
+    }
+  ]
+}

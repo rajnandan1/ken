@@ -1,0 +1,46 @@
+{
+  "name": "@rajnandan1/ken",
+  "version": "1.0.0",
+  "description": "Thompson-mode systems discipline for AI agents. Try it, and if it doesn't work, throw it out and do it again.",
+  "keywords": ["opencode-plugin", "opencode", "ken", "thompson", "pi-package", "pi", "skills", "qoder"],
+  "license": "MIT",
+  "author": {
+    "name": "Raj Nandan Sharma",
+    "url": "https://github.com/rajnandan1"
+  },
+  "homepage": "https://github.com/rajnandan1/ken",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajnandan1/ken.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rajnandan1/ken/issues"
+  },
+  "main": "./.opencode/plugins/ken.mjs",
+  "exports": {
+    ".": "./.opencode/plugins/ken.mjs",
+    "./plugin": "./.opencode/plugins/ken.mjs"
+  },
+  "files": [
+    "AGENTS.md",
+    "hooks/",
+    "skills/",
+    ".opencode/",
+    ".qoder/",
+    ".qoder-plugin/",
+    "pi-extension/",
+    "scripts/uninstall.js",
+    "assets/",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.js && npm test --prefix pi-extension && npm test --prefix ken-mcp"
+  },
+  "pi": {
+    "extensions": ["./pi-extension/index.js"],
+    "skills": ["./skills"]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

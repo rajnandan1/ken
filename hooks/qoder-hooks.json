@@ -1,0 +1,26 @@
+{
+  "_comment": "Reference template — copy the 'hooks' object into your .qoder/settings.json or ~/.qoder/settings.json. Replace KEN_DIR with the path to your ken checkout (e.g. ~/.qoder/plugins/ken or the npm global install path).",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node KEN_DIR/hooks/ken-mode-tracker.js"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "task|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node KEN_DIR/hooks/ken-subagent.js"
+          }
+        ]
+      }
+    ]
+  }
+}
