@@ -43,27 +43,52 @@ it depends on, and leave a **runnable check** behind. The behavior gates and
 agentic quality tier in [benchmarks/](benchmarks/) measure those behaviors. A
 maintenance-over-time benchmark scores what survives a sequence of tickets.
 
-**Ken claims measured numbers, including results that do not flatter it.**
-Measured so far ([haiku](benchmarks/results/2026-08-26-maintenance-v1-haiku.md) /
-[sonnet](benchmarks/results/2026-08-26-maintenance-v1-sonnet.md) v1.0.0 rounds, then the
-[iteration-1 verdict](benchmarks/results/2026-08-26-maintenance-v1_1-verdict.md)):
-v1.0.0's aspirational rules changed nothing: no advantage on either model,
-1 rewrite in 24 rot cells. Iteration 1 made two rules procedural and
-re-measured under a pre-registered keep/revert rule: **the countable rewrite
-trigger took rewrite-on-rot from 0/2 to 2/2 in all three runs** (baseline,
-same tickets, same day: still 0/2) with survival up, so **v1.1 shipped**.
-Iterations 2 and 3 ([v1.2](benchmarks/results/2026-08-26-maintenance-v1_2-verdict.md),
-[v1.3](benchmarks/results/2026-08-26-maintenance-v1_3-verdict.md)) attacked the
-root-cause gap with sharper and then tool-literal wordings and **both reverted
-under the same pre-registered rule**. Nine of nine runs across three
-instruction forms guarded the ticket-named site. Documented as a measured
-limit: single-shot ken rewrites rot visible at the edit
-site, and no injected instruction induces cross-file caller exploration. The
-fix, if built, requires a structural change. Ken's rules require someone to
-argue for that feature first. Stronger models and later ruleset iterations get
-measured next, and each run lands in [benchmarks/results/](benchmarks/results/)
-regardless of its result. `/ken-gain`
-renders only what that directory contains.
+### The one rule with measured receipts
+
+```mermaid
+flowchart LR
+    A[bug ticket] --> B{fix-comments\non the unit?}
+    B -->|3 or more| C[rewrite the unit]
+    B -->|fewer| D[smallest correct fix]
+```
+
+Same benchmark round, same bug ticket, same function carrying three dated
+fix-comments — verbatim agent output from the kept workspaces
+(run `20260826-203814`, haiku, 3 runs per arm):
+
+**Without ken** — patch four, appended below the existing trail, in 3 of 3 runs:
+
+```python
+    # fix 2026-08-26 (#??): bare numbers are seconds (tracker exports)
+    if num:
+        total += float(num)
+```
+
+**With ken** — a rewrite, trail gone, in 3 of 3 runs:
+
+```python
+def parse_duration(s):
+    """Parse '1h30m45s' into total seconds."""
+    if s is None:
+        return 0
+    total = 0.0
+    for match in re.finditer(r'([0-9.]+)([a-z])?', s.lower()):
+        num = float(match.group(1))
+        unit = match.group(2)
+        if unit == 'h':
+            total += num * 3600
+        elif unit == 'm':
+            total += num * 60
+        else:
+            total += num  # 's' or bare number: seconds
+    return int(total)
+```
+
+Across that round ken rewrote 6 of 6 rot-seeded units; the no-skill arm
+rewrote 0 of 6. Survival tied at 8/9. The same data also records what ken
+does *not* fix: it guarded a ticket-named call site instead of the shared
+helper in 3 of 3 runs — a documented limit, not a hidden one. Every round is
+in [benchmarks/results/](benchmarks/results/).
 
 ## Install
 
