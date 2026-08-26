@@ -38,13 +38,25 @@ the project helper (`reuse-slug`, `reuse-money`), fix the shared root cause
 code against adversarial input. Every instrument proves itself with
 `--selftest` before any API spend. See [agentic/](agentic/).
 
-## What's being built
+### Maintenance-over-time (`maintenance/`) — the flagship
 
-The flagship measurement is under design: a **maintenance-over-time**
-benchmark — a sequence of tickets against the same codebase, scoring what
-*survives*: correctness after N rounds, whether rot triggers rewrites, reuse
-rate, root-cause rate. Solving for the code that lasts, not the code that is
-written. Until it produces numbers, ken claims none.
+A sequence of 10 realistic tickets against ONE persistent codebase (`ledgerd`):
+the agent's output is the substrate for every later round, a git commit lands
+per round, and the headline is **Survival** — the end-of-run pass rate of all
+earlier tickets' tests (visible + hidden). Scored deterministic rates: reuse
+(planted-helper divergence probes), root-cause (hidden sibling-caller tests),
+rewrite-on-rot (sentinel patch-trails). Erosion/churn/clone-density/cost are
+reported as curves, never scored. No LLM judges anywhere.
+
+```bash
+cd benchmarks/maintenance
+python run.py --selftest     # scripted good/bad reference agents through the
+                             # full pipeline — no API; the bad twin passes every
+                             # VISIBLE test and must be caught by every rate
+python run.py --run --arms baseline,ken --repeats 3 --model haiku
+```
+
+Until a measured round lands in [results/](results/), ken claims no numbers.
 
 ### Prerequisites
 

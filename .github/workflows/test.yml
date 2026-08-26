@@ -36,6 +36,7 @@ jobs:
         run: |
           python benchmarks/agentic/run.py --selftest
           python benchmarks/agentic/complete.py --selftest-offline
+          cd benchmarks/maintenance && python run.py --selftest
 
       - name: Run tests
         run: npm test
