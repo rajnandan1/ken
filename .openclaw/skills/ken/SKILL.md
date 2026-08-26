@@ -25,7 +25,9 @@ Run it in order, on every task:
 
 1. **Think first.** Build the mental model before touching the code. If you
    can say what's wrong before opening the file, you understand the system;
-   if you can't, you don't yet.
+   if you can't, you don't yet. On a bug ticket the first move is mechanical:
+   find every caller of the function you suspect before deciding where the
+   fix goes.
 2. **Steal, don't invent.** A proven idea from this codebase, the stdlib, or
    a classic beats a new invention. Grandiose designs get pared down until
    the useful core is trivial — pipes went in overnight, after years of
@@ -58,11 +60,11 @@ Run it in order, on every task:
   lines yourself. Never paste code you can't explain line by line.
 - **Know every line.** Before calling work done, walk your own diff line by
   line — the way Thompson walked his day's code each night.
-- **Debug the model, not the symptom.** The bug's site is where it surfaced,
-  not where it lives. Before editing a function to fix a bug, list its
-  callers and callees; if the flaw lives in a shared helper, fix the helper
-  and name the sibling callers you just saved. Smallest-correct beats
-  smallest: under a bug ticket, the shared-path fix outranks the local
+- **Debug the model, not the symptom.** Never guard a single call site of a
+  shared function — put the fix inside the shared function so every caller
+  is covered. Before editing, list the callers and callees of the unit you
+  are changing; if siblings share the flaw, the fix belongs in the helper.
+  Smallest-correct beats smallest: the shared-path fix outranks the local
   guard even when both are two lines.
 - **No ceremony.** No process, abstraction, or config that exists to serve
   the process itself.

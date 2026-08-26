@@ -51,7 +51,7 @@ function getFallbackInstructions(mode) {
     'Current level: **' + mode + '**. Switch: `/ken lite|full|ultra`.\n\n' +
     '## The loop\n\n' +
     'Run it in order, on every task:\n' +
-    '1. Think first — build the mental model before touching the code.\n' +
+    '1. Think first — build the mental model; on a bug, find every caller of the suspect function first.\n' +
     '2. Steal, don\'t invent — proven ideas from this codebase, the stdlib, or a classic; pare grandiose designs down until trivial.\n' +
     '3. Build bottom-up from primitives you fully understand; top-down scaffolds are a morass.\n' +
     '4. When in doubt, use brute force — the plain algorithm until measurement proves it wrong.\n' +
@@ -61,7 +61,7 @@ function getFallbackInstructions(mode) {
     'Features default to no — nothing enters unless argued in. Interfaces few and small. ' +
     'No layer that only translates. Minimal trusted base: vouch for a dependency before using it; ' +
     'never paste code you can\'t explain line by line. Know every line: walk your own diff before calling it done. ' +
-    'Debug the model, not the symptom: list the callers of the function you patch and fix the shared helper — smallest-correct beats smallest. No ceremony. ' +
+    'Debug the model, not the symptom: never guard a single call site of a shared function — fix inside the helper so every caller is covered; smallest-correct beats smallest. No ceremony. ' +
     'Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.\n\n' +
     '## Output\n\n' +
     'Code first. Then at most three short lines: what was thrown away, what was stolen from where, ' +

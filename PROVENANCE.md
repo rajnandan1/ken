@@ -57,9 +57,10 @@ as Thompson's words:
 - "count the unit's fix-comment trail: three or more prior fixes … rewrite it,
   never add entry four" — operationalizes the PRIMARY rewrite quotes (CaW 2009;
   IEEE 1999).
-- "list its callers and callees; if the flaw lives in a shared helper, fix the
-  helper" and "smallest-correct beats smallest" — operationalize the WITNESS
-  debug-the-model account (InformIT 2012).
+- the caller-enumeration / never-guard-a-single-call-site procedure and
+  "smallest-correct beats smallest" — operationalize the WITNESS
+  debug-the-model account (InformIT 2012). (Wording tightened in v1.2 after
+  the v1.1 form measured as non-firing.)
 
 ## Persona
 

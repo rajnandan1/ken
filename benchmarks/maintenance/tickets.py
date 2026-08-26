@@ -5,7 +5,7 @@ Each ticket: a realistic prompt (probe never named), a VISIBLE acceptance test
 reads), and a HIDDEN strengthened test (scorer-only, run from a temp dir so it
 never touches the persistent workspace). Rates, per the metric definition:
 
-  reuse      rounds 1,3,7,9 — hidden divergence probe passes at round time
+  reuse      rounds 1,3,7 — hidden divergence probe passes at round time (r9 retired to reported)
   root-cause rounds 2,6     — hidden sibling-caller test passes at round time
   rewrite    rounds 4,8     — rot sentinels gone AND the round's visible tests pass
   survival   headline       — end-of-run: rounds 1..9 visible+hidden all pass
@@ -260,7 +260,7 @@ print("r8 hidden OK")
 ''',
     },
     {
-        "round": 9, "id": "r9-search", "probe": "reuse",
+        "round": 9, "id": "r9-search", "probe": None,  # retired from scored reuse 2026-08-26: 0/24 then 24/24 — verifies prompt-following, not method; hidden test still counts toward survival
         "title": "Search invoices by title",
         "prompt": (
             "Add a `search(fragment)` function to `invoices.py` returning the sorted list "
