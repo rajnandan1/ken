@@ -59,9 +59,10 @@ as Thompson's words:
   IEEE 1999).
 - the caller-enumeration / never-guard-a-single-call-site procedure and
   "smallest-correct beats smallest" — operationalize the WITNESS
-  debug-the-model account (InformIT 2012). (A v1.2 tightening measured as
-  still non-firing and was reverted; v1.3 tests a third instruction class —
-  tool-literal — see benchmarks/results/.)
+  debug-the-model account (InformIT 2012). (Three instruction forms — abstract,
+  first-action, and tool-literal — all measured as non-firing and were
+  reverted; the shipped wording keeps the honest aspiration, and the limit
+  is documented in benchmarks/results/.)
 
 ## Persona
 

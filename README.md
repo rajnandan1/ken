@@ -54,11 +54,15 @@ v1.0.0's aspirational rules changed nothing — no advantage on either model,
 re-measured under a pre-registered keep/revert rule: **the countable rewrite
 trigger took rewrite-on-rot from 0/2 to 2/2 in all three runs** (baseline,
 same tickets, same day: still 0/2) with survival up, so **v1.1 shipped**.
-Iteration 2 ([verdict](benchmarks/results/2026-08-26-maintenance-v1_2-verdict.md))
-tried a sharper first-action wording for root-cause and **reverted under the
-same pre-registered rule**: two measured wordings failed to move it, so it's
-documented as a limit, not respun — single-shot ken reliably rewrites rot it
-can see at the edit site, and does not reliably root-cause across files. That is
+Iterations 2 and 3 ([v1.2](benchmarks/results/2026-08-26-maintenance-v1_2-verdict.md),
+[v1.3](benchmarks/results/2026-08-26-maintenance-v1_3-verdict.md)) attacked the
+root-cause gap with sharper and then tool-literal wordings and **both reverted
+under the same pre-registered rule** — nine of nine runs across three
+instruction forms guarded the ticket-named site. Documented as a measured
+limit, not respun: single-shot ken reliably rewrites rot visible at the edit
+site, and no injected instruction induces cross-file caller exploration. The
+fix, if ever built, is structural — and per ken's own rules, it isn't built
+until argued in. That is
 the benchmark doing its job; stronger models and ruleset iterations get
 measured next, and every run lands in
 [benchmarks/results/](benchmarks/results/) whatever it shows. `/ken-gain`

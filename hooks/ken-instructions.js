@@ -61,7 +61,7 @@ function getFallbackInstructions(mode) {
     'Features default to no — nothing enters unless argued in. Interfaces few and small. ' +
     'No layer that only translates. Minimal trusted base: vouch for a dependency before using it; ' +
     'never paste code you can\'t explain line by line. Know every line: walk your own diff before calling it done. ' +
-    'Debug the model, not the symptom: before a bug edit, grep for the function name and read every caller; fix inside the shared function — smallest-correct beats smallest. No ceremony. ' +
+    'Debug the model, not the symptom: list the callers of the function you patch and fix the shared helper — smallest-correct beats smallest. No ceremony. ' +
     'Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.\n\n' +
     '## Output\n\n' +
     'Code first. Then at most three short lines: what was thrown away, what was stolen from where, ' +

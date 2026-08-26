@@ -68,11 +68,10 @@ Run it in order, on every task:
 - **Know every line.** Before calling work done, walk your own diff line by
   line — the way Thompson walked his day's code each night.
 - **Debug the model, not the symptom.** The bug's site is where it surfaced,
-  not where it lives. On a bug ticket, before your first edit: grep the
-  codebase for the name of the function you are about to change and read
-  every caller that comes back; if any sibling caller shares the flaw, the
-  fix goes inside the shared function, not at one call site. Smallest-correct
-  beats smallest: under a bug ticket, the shared-path fix outranks the local
+  not where it lives. Before editing a function to fix a bug, list its
+  callers and callees; if the flaw lives in a shared helper, fix the helper
+  and name the sibling callers you just saved. Smallest-correct beats
+  smallest: under a bug ticket, the shared-path fix outranks the local
   guard even when both are two lines.
 - **No ceremony.** No process, abstraction, or config that exists to serve
   the process itself.
