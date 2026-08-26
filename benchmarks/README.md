@@ -6,43 +6,42 @@ root cause instead of the named symptom, vouch for dependencies, leave a
 runnable check. Lines of code measure none of that, so ken carries no LOC
 benchmark.
 
-**Nothing in this repo claims a number that wasn't measured. Every measured
-run lives in [results/](results/) with its date, model, and configuration.
-`/ken-gain` renders only what results/ contains.**
+**This repo claims measured numbers. [results/](results/) records each run's
+date, model, and configuration. `/ken-gain` renders that record.**
 
 ## What exists today
 
 ### Behavior gates (`behavior.yaml` + `behavior.js`)
 
-Does the ruleset *produce* its behaviors, not just carry the text? Three
-probes, each a ken rule, with baseline as the control arm:
+Three probes test whether the ruleset produces its stated behaviors. Each
+probe covers one ken rule and uses baseline as the control arm:
 
-- `rewrite` — a thrice-patched unit gets rewritten (and the answer says so),
-  not silently patched a fourth time
-- `explanation` — a write-up the user explicitly asked for is given in full
-- `onecheck` — non-trivial logic leaves one runnable check behind
+- `rewrite`: a thrice-patched unit gets rewritten (and the answer says so),
+  without a fourth patch
+- `explanation`: the agent gives the user a full requested write-up
+- `onecheck`: non-trivial logic leaves one runnable check behind
 
 ```bash
 npx promptfoo@latest eval -c benchmarks/behavior.yaml --env-file ../.env --repeat 10
 ```
 
-The graders are proven separately by `tests/behavior.test.js` (RED/GREEN, no
+`tests/behavior.test.js` proves the graders (RED/GREEN, no
 API key).
 
 ### Agentic tiers (`agentic/`)
 
 Real headless Claude Code sessions editing seeded codebases, scored on the
-files left behind. The **quality tier** measures ken's axes directly — reuse
+files left behind. The **quality tier** measures ken's axes: reuse
 the project helper (`reuse-slug`, `reuse-money`), fix the shared root cause
-(`trace-transfer`, `trace-amount`) — and the **safety tier** executes produced
+(`trace-transfer`, `trace-amount`). The **safety tier** executes produced
 code against adversarial input. Every instrument proves itself with
 `--selftest` before any API spend. See [agentic/](agentic/).
 
-### Maintenance-over-time (`maintenance/`) — the flagship
+### Maintenance-over-time (`maintenance/`)
 
 A sequence of 10 realistic tickets against ONE persistent codebase (`ledgerd`):
 the agent's output is the substrate for every later round, a git commit lands
-per round, and the headline is **Survival** — the end-of-run pass rate of all
+per round. **Survival** records the end-of-run pass rate of all
 earlier tickets' tests (visible + hidden). Scored deterministic rates: reuse
 (planted-helper divergence probes), root-cause (hidden sibling-caller tests),
 rewrite-on-rot (sentinel patch-trails). Erosion/churn/clone-density/cost are
@@ -51,12 +50,12 @@ reported as curves, never scored. No LLM judges anywhere.
 ```bash
 cd benchmarks/maintenance
 python run.py --selftest     # scripted good/bad reference agents through the
-                             # full pipeline — no API; the bad twin passes every
+                             # full pipeline; no API; the bad twin passes every
                              # VISIBLE test and must be caught by every rate
 python run.py --run --arms baseline,ken --repeats 3 --model haiku
 ```
 
-Until a measured round lands in [results/](results/), ken claims no numbers.
+Ken claims a number after a measured round lands in [results/](results/).
 
 ### Prerequisites
 

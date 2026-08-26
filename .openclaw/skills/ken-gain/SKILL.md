@@ -13,13 +13,13 @@ files, or persist anything.
 ## Source of truth
 
 The only figures this card may show are medians from ken's own runs recorded
-in `benchmarks/results/` of the ken repo. Read them; render what's actually
-there as plain ASCII bars (bar length = measured range, label = exact figure).
+in `benchmarks/results/` of the ken repo. Render the recorded figures as plain
+ASCII bars (bar length = measured range, label = exact figure).
 
-If `benchmarks/results/` has no ken results yet, say exactly that:
+If `benchmarks/results/` has no ken results yet, print:
 
 ```
-  ken gain — no measured numbers yet.
+  ken gain: no measured numbers yet.
 
   Nothing is claimed that wasn't measured. Run the harness in benchmarks/
   (see benchmarks/README.md; needs API keys in .env) to produce the first

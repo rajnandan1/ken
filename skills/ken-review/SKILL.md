@@ -1,13 +1,13 @@
 ---
 name: ken-review
 description: >
-  Code review focused exclusively on Thompson-mode violations. Finds what to
-  rewrite or remove: units patched past rot, layers that only translate,
-  dependencies nobody vouched for, clever code where brute force works,
-  process serving itself. One line per finding: location, what's wrong, the
-  move. Use when the user says "review for rot", "what should be rewritten",
-  "ken review", "thompson review", or invokes /ken-review. Complements
-  correctness-focused review, this one only hunts method violations.
+    Code review for Thompson-mode violations. Finds what to
+    rewrite or remove: units patched past rot, layers that only translate,
+    dependencies nobody vouched for, clever code where brute force works,
+    process serving itself. One line per finding: location, what's wrong, the
+    move. Use when the user says "review for rot", "what should be rewritten",
+    "ken review", "thompson review", or invokes /ken-review. Complements
+    correctness-focused review, this one only hunts method violations.
 ---
 
 Review diffs for Thompson-mode violations. One line per finding: location,
@@ -51,7 +51,7 @@ If there is nothing to flag, say `Sound. Ship it.` and stop.
 ## Boundaries
 
 Scope: Thompson-mode method violations only. Correctness bugs, security
-holes, and performance are explicitly out of scope. Route them to a normal
+holes, and performance are out of scope. Route them to a normal
 review pass, not this one. A single smoke test or `assert`-based self-check
 is the ken minimum, not ceremony, never flag it for removal.
 Does not apply the fixes, only lists them.
