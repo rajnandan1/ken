@@ -45,9 +45,15 @@ agentic quality tier in [benchmarks/](benchmarks/) measure exactly that; a
 maintenance-over-time benchmark — scoring what *survives* a sequence of
 tickets, not what gets written — is under design.
 
-**No numbers are claimed until they are measured.** Every measured run lives
-in [benchmarks/results/](benchmarks/results/); `/ken-gain` renders only what
-that directory contains.
+**Only measured numbers are claimed — including the ones that don't flatter
+ken.** The first maintenance round (haiku, 3 repeats, [full entry](benchmarks/results/2026-08-26-maintenance-v1-haiku.md))
+measured **no ken advantage**: median Survival 7/9 vs baseline's 8/9, reuse
+tied, root-cause behind, and neither arm ever rewrote a rot unit — the
+injected ruleset (activation verified) did not change haiku's method. That is
+the benchmark doing its job; stronger models and ruleset iterations get
+measured next, and every run lands in
+[benchmarks/results/](benchmarks/results/) whatever it shows. `/ken-gain`
+renders only what that directory contains.
 
 ## Install
 

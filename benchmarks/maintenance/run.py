@@ -135,7 +135,9 @@ def run_claude_round(ws, ticket, arm, model):
         u = j.get("usage") or {}
         meta = {"cost": j.get("total_cost_usd"), "duration_ms": j.get("duration_ms"),
                 "turns": j.get("num_turns"), "out_tokens": u.get("output_tokens"),
-                "in_tokens": u.get("input_tokens")}
+                "in_tokens": u.get("input_tokens"),
+                # cache tokens carry the injected ruleset -- per-round evidence the arm activated
+                "cache_tokens": (u.get("cache_read_input_tokens") or 0) + (u.get("cache_creation_input_tokens") or 0)}
     except Exception:
         pass
     return meta
