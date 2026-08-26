@@ -31,7 +31,7 @@ from judge import load_key, source_text, judge_call, parse_score, RUNS_DIR, JUDG
 
 SCORE_KEY = "completeness"
 FLAG_AT = 1                 # cells scoring <= this are under-delivery (stub/partial) and get listed
-ARMS_ORDER = ["baseline", "ken", "ponytail", "yagni-oneliner"]
+ARMS_ORDER = ["baseline", "ken", "yagni-oneliner"]
 
 RUBRIC = (
     "You are a senior engineer checking whether a code submission ACTUALLY IMPLEMENTS the task it "

@@ -35,8 +35,8 @@ Figures are benchmark medians, not this repo. NEVER print a per-repo savings
 number ("you saved X lines/tokens here"): the unbuilt version was never
 written, so there is no real baseline to subtract from in a live repo. The
 only real per-repo figures come from `/ken-debt` (a counted ledger), and
-this card points there instead of inventing one. Never render ponytail's
-published numbers as ken's.
+this card points there instead of inventing one. Never render another
+project's numbers as ken's.
 
 ## Boundaries
 

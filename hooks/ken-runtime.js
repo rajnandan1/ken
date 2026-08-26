@@ -4,9 +4,6 @@ const os = require('os');
 const { getClaudeDir } = require('./ken-config');
 
 const STATE_FILE = '.ken-active';
-// Ponytail's live-mode flag, read for the delta-complement path: when ponytail
-// is active, ken injects only its delta instead of a second full persona.
-const PONYTAIL_STATE_FILE = '.ponytail-active';
 
 // VS Code Copilot never sets COPILOT_PLUGIN_DATA — it only injects
 // CLAUDE_PLUGIN_ROOT, pointed at an install path under .vscode/agent-plugins/.
@@ -31,7 +28,6 @@ if (isCopilot) stateDir = process.env.COPILOT_PLUGIN_DATA || getClaudeDir();
 if (isQoder) stateDir = path.join(os.homedir(), '.qoder');
 
 const statePath = path.join(stateDir, STATE_FILE);
-const ponytailStatePath = path.join(stateDir, PONYTAIL_STATE_FILE);
 
 function setMode(mode) {
   fs.mkdirSync(path.dirname(statePath), { recursive: true });
@@ -51,16 +47,6 @@ function readMode() {
   }
 }
 
-// Ponytail's live mode, same stateDir resolution its own hooks use.
-// Absent flag or "off" = ponytail not active.
-function readPonytailMode() {
-  try {
-    const mode = fs.readFileSync(ponytailStatePath, 'utf8').trim() || null;
-    return mode === 'off' ? null : mode;
-  } catch (e) {
-    return null;
-  }
-}
 
 function writeHookOutput(event, mode, context = '') {
   if (isCopilot) {
@@ -109,7 +95,6 @@ module.exports = {
   isCopilot,
   isQoder,
   readMode,
-  readPonytailMode,
   setMode,
   writeHookOutput,
 };

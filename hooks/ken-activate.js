@@ -3,8 +3,7 @@
 //
 // Runs on every session start:
 //   1. Writes flag file at $CLAUDE_CONFIG_DIR/.ken-active (defaults to ~/.claude; statusline reads this)
-//   2. Emits ken ruleset as hidden SessionStart context — or only ken's delta
-//      when ponytail is also active (delta complement)
+//   2. Emits ken ruleset as hidden SessionStart context
 //   3. Detects missing statusline config and emits setup nudge
 
 const fs = require('fs');
@@ -39,8 +38,7 @@ try {
   // Silent fail -- flag is best-effort, don't block the hook
 }
 
-// 2. Emit the ken ruleset (or the ponytail-complement delta), filtered to the
-//    active intensity level.
+// 2. Emit the ken ruleset, filtered to the active intensity level.
 let output = getKenInstructions(mode);
 
 // 3. Detect missing statusline config — nudge Claude to help set it up
@@ -72,7 +70,7 @@ if (!isCodex && !isCopilot) try {
         '"statusLine": { "type": "command", "command": ' + JSON.stringify(command) + ' }';
       output += "\n\n" +
         "STATUSLINE SETUP NEEDED: The ken plugin includes a statusline badge showing active mode " +
-        "(e.g. [KEN], [KEN:ULTRA] — plus +PT when ponytail is also active). It is not configured yet. " +
+        "(e.g. [KEN], [KEN:ULTRA]). It is not configured yet. " +
         "To enable, add this to " + settingsPath + ": " +
         statusLineSnippet + " " +
         "Proactively offer to set this up for the user on first interaction.";

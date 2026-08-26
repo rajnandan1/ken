@@ -107,7 +107,7 @@ def _fallback_instructions(mode: str) -> str:
 
 
 def build_injected_context(mode: str | None = None) -> str:
-    """Return the mode-filtered Ponytail context injected before LLM turns."""
+    """Return the mode-filtered Ken context injected before LLM turns."""
     configured = _normalize_config_mode(mode) or _default_mode()
     if configured == "off":
         return ""

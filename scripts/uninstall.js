@@ -30,7 +30,7 @@ try {
   const settings = JSON.parse(raw);
   const cmd = settings.statusLine && settings.statusLine.command;
   // Only remove the parts ken owns. If the user combined statuslines
-  // (e.g. ponytail && ken), keep the other plugin's command intact.
+  // (e.g. another-plugin && ken), keep the other plugin's command intact.
   // ken: splits on && / ; to detect other segments — good enough; a user
   // piping statuslines together is on their own.
   if (typeof cmd === 'string' && cmd.includes(STATUSLINE_SCRIPT)) {

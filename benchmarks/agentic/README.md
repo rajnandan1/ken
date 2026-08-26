@@ -21,15 +21,13 @@ editing a **seeded codebase**, scored on the files it leaves behind.
 
 ## Arms
 
-`baseline` (no skill) · `ken` (plugin, real SessionStart activation) · `ponytail` (plugin —
-the comparison arm) · `yagni-oneliner` ("Follow YAGNI principles, and prefer one-liner
-solutions." — the seven-word control: if one line of prompt matches ken, the benchmark
-should show it).
+`baseline` (no skill) · `ken` (plugin, real SessionStart activation) · `yagni-oneliner`
+("Follow YAGNI principles, and prefer one-liner solutions." — the seven-word control: if
+one line of prompt matches ken, the benchmark should show it).
 
 Skills are plugins activated by a SessionStart hook. To test exactly one at a time the runner
-excludes the user's globally-enabled plugins (`--setting-sources project,local`) and loads one
-plugin from its cache dir (`--plugin-dir`). ken and ponytail must both be installed (or set
-`KEN_PLUGIN_DIR` / `PONYTAIL_PLUGIN_DIR`).
+excludes the user's globally-enabled plugins (`--setting-sources project,local`) and loads the
+ken plugin from its cache dir (`--plugin-dir`); ken must be installed (or set `KEN_PLUGIN_DIR`).
 
 ## Tasks
 
@@ -62,7 +60,7 @@ Needs the `claude` CLI, Python 3, and an authenticated Claude Code:
 ```bash
 python run.py --selftest                                    # prove the instruments, no API -- run first
 python run.py --task safe-path,critic-email,rate-limit,sql-user,auth-token,csv-sum,cache \
-  --arms baseline,ken,ponytail,yagni-oneliner --models haiku --runs 4 --workers 6
+  --arms baseline,ken,yagni-oneliner --models haiku --runs 4 --workers 6
 python run.py --rescore runs/<stamp>                        # recompute metrics offline, no API
 ```
 

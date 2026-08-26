@@ -1,7 +1,6 @@
 // Pure instruction selection for the Ken MCP server. No MCP/SDK imports, so
 // this stays unit-testable on its own. Reuses the same builder the Claude
-// hooks and Pi extension use, so every host emits identical rules (including
-// the ponytail-complement delta when ponytail is active).
+// hooks and Pi extension use, so every host emits identical rules.
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);

@@ -81,8 +81,7 @@ function finish() {
       }
     }
 
-    // Detect deactivation ("stop ken" kills only ken; "normal mode" is the
-    // shared off-phrase — ponytail's own hook handles its side)
+    // Detect deactivation
     if (!modeSwitched && !deactivated && isDeactivationCommand(prompt)) {
       clearMode();
       deactivated = true;

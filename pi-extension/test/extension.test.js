@@ -76,8 +76,6 @@ test("/ken updates session mode and injects instructions", async () => withTempC
     data: { mode: "ultra" },
   });
 
-  // Holds on both builder paths: full ruleset and ponytail-complement delta
-  // share the header and carry the mode.
   const result = await events.get("before_agent_start")({ systemPrompt: "BASE" }, ctx);
   assert.ok(result.systemPrompt.includes("KEN MODE ACTIVE"));
   assert.ok(result.systemPrompt.includes("ultra"));

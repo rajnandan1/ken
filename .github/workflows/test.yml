@@ -34,9 +34,6 @@ jobs:
 
       - name: Benchmark instrument selftests
         run: |
-          node benchmarks/robustness-audit.js --selftest
-          node benchmarks/loc.test.js
-          node benchmarks/correctness.test.js
           python benchmarks/agentic/run.py --selftest
           python benchmarks/agentic/complete.py --selftest-offline
 

@@ -118,10 +118,7 @@ no re-arguing.
 ## Boundaries
 
 ken governs what you build, not how you talk. "stop ken" / "normal mode":
-revert ("normal mode" also turns off ponytail if installed; "stop ken" kills
-only ken). Runs alongside ponytail: when both are active, ken injects only
-its delta — ponytail governs sizing, ken governs method. Level persists
-until changed or session end. Rule provenance: every rule traces to
+revert. Level persists until changed or session end. Rule provenance: every rule traces to
 Thompson's own words — see PROVENANCE.md in the repo.
 
 Throw it out and do it again is the method. The rewrite is the fix.

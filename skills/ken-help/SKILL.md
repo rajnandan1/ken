@@ -35,16 +35,10 @@ Level sticks until changed or session end.
 Codex uses `@ken`, `@ken-review`, and `@ken-help`; Claude Code and OpenCode
 use the slash-command forms above (OpenCode ships all six as slash commands).
 
-## Ponytail
-
-Ken complements ponytail: when both are active, ponytail governs sizing
-(write the least) and ken governs method (how the code comes to exist) — ken
-injects only its delta, one engineer's voice, not two.
 
 ## Deactivate
 
-Say "stop ken" (ken only) or "normal mode" (also turns off ponytail).
-Resume anytime with `/ken`. `/ken off` also works.
+Say "stop ken" or "normal mode". Resume anytime with `/ken`. `/ken off` also works.
 
 ## Configure Default Mode
 

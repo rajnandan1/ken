@@ -1,14 +1,9 @@
 #!/usr/bin/env node
 // Shared ken instruction builder for Claude hooks and Pi extension.
-//
-// Delta complement: when ponytail's flag says it is active, ken injects only
-// the rules ponytail doesn't already enforce, plus one arbitration rule —
-// never a second full persona alongside ponytail's.
 
 const fs = require('fs');
 const path = require('path');
 const { DEFAULT_MODE, normalizeMode, normalizePersistedMode } = require('./ken-config');
-const { readPonytailMode } = require('./ken-runtime');
 
 const INDEPENDENT_MODES = new Set(['review']);
 const SKILL_PATH = path.join(__dirname, '..', 'skills', 'ken', 'SKILL.md');
@@ -45,23 +40,6 @@ function filterSkillBodyForMode(body, mode) {
     .join('\n');
 }
 
-// The delta injected when ponytail is co-active: only what ponytail doesn't
-// already enforce, plus the arbitration rule. Ponytail governs sizing (write
-// the least); ken governs method. ken: fixed text regardless of ken level —
-// per-level deltas only if a real need appears.
-function getDeltaInstructions(mode, ponytailMode) {
-  return 'KEN MODE ACTIVE — level: ' + mode + ' — complementing ponytail (' + ponytailMode + ').\n\n' +
-    'Both are one engineer\'s voice, not two: ponytail governs sizing (write the least), ' +
-    'ken governs method (how the code comes to exist). Ken\'s delta — rules ponytail does not already enforce:\n\n' +
-    '- Think first. Build the mental model before touching the code; if you can\'t say what\'s wrong before opening the file, you don\'t understand the system yet.\n' +
-    '- Steal, don\'t invent. A proven idea from this codebase, the stdlib, or a classic beats a new invention; pare grandiose designs down until the useful core is trivial.\n' +
-    '- Build bottom-up from primitives you fully understand. Never add a layer that only translates — delete it and move its callers down a level.\n' +
-    '- When in doubt, use brute force. The plain loop, the linear scan, the flat array — until measurement proves it wrong. Mark deliberate ceilings with a `ken:` comment naming the ceiling and upgrade trigger.\n' +
-    '- Minimal trusted base. Vouch for a dependency (read enough of it) before using it — a gate on ponytail\'s use-the-installed-dep rung. Never paste code you can\'t explain line by line.\n' +
-    '- Debug the model, not the symptom. Fix the design decision that produced the bug, not the line where it surfaced.\n' +
-    '- Arbitration rule: a unit on its third patch gets the rewrite even though it\'s a bigger diff — laziest-over-time beats laziest-today.\n\n' +
-    'Off: "stop ken" (ken only) / "normal mode" (both plugins). Level: /ken lite|full|ultra.';
-}
 
 function getFallbackInstructions(mode) {
   return 'KEN MODE ACTIVE — level: ' + mode + '\n\n' +
@@ -107,12 +85,6 @@ function getKenInstructions(mode) {
 
   const effectiveMode = normalizeMode(configuredMode) || DEFAULT_MODE;
 
-  // Delta complement: ponytail active → inject only ken's delta.
-  const ponytailMode = readPonytailMode();
-  if (ponytailMode) {
-    return getDeltaInstructions(effectiveMode, ponytailMode);
-  }
-
   try {
     return 'KEN MODE ACTIVE — level: ' + effectiveMode + '\n\n' +
       filterSkillBodyForMode(fs.readFileSync(SKILL_PATH, 'utf8'), effectiveMode);
@@ -123,7 +95,6 @@ function getKenInstructions(mode) {
 
 module.exports = {
   filterSkillBodyForMode,
-  getDeltaInstructions,
   getFallbackInstructions,
   getKenInstructions,
 };

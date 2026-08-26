@@ -15,7 +15,7 @@ const { pathToFileURL } = require('url');
 // after this assignment, so the ordering holds.
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ken-opencode-'));
 process.env.XDG_CONFIG_HOME = tmp;
-process.env.CLAUDE_CONFIG_DIR = path.join(tmp, 'claude');
+process.env.CLAUDE_CONFIG_DIR = path.join(tmp, 'claude'); // isolate state dir from the dev machine
 delete process.env.KEN_DEFAULT_MODE;
 const statePath = path.join(tmp, 'opencode', '.ken-active');
 

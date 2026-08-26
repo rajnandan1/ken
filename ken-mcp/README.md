@@ -2,8 +2,7 @@
 
 An MCP server that serves Ken's Thompson-mode instructions. It exposes the
 same ruleset the Claude hooks and Pi extension use, so every host emits
-identical rules — including the ponytail-complement delta when ponytail is
-active on the same machine.
+identical rules.
 
 It is not a replacement for the always-on adapters. Ken normally lives in the
 system context every turn. MCP prompts are user-invoked, and there is no

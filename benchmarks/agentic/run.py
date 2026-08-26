@@ -35,7 +35,6 @@ def _skill(rel): return (ROOT / rel).read_text(encoding="utf-8")
 ARMS = {
     "baseline":       lambda: None,
     "ken":            lambda: _skill("skills/ken/SKILL.md"),
-    "ponytail":       lambda: _skill("benchmarks/arms/ponytail-SKILL.md"),
     "yagni-oneliner": lambda: "Follow YAGNI principles, and prefer one-liner solutions.",
 }
 MODELS = {"haiku": "claude-haiku-4-5-20251001", "sonnet": "claude-sonnet-4-6", "opus": "claude-opus-4-8"}
@@ -43,14 +42,14 @@ MODELS = {"haiku": "claude-haiku-4-5-20251001", "sonnet": "claude-sonnet-4-6", "
 # Skills are plugins activated by a SessionStart hook. To test exactly one at a time we exclude the
 # user's globally-enabled plugins (--setting-sources project,local) and load one plugin from its
 # cache dir (--plugin-dir). The smoke test verifies activation by output style.
-PLUGIN_ARMS = ("ken", "ponytail")              # arms activated via --plugin-dir (vs raw --append prompts)
+PLUGIN_ARMS = ("ken",)                         # arms activated via --plugin-dir (vs raw --append prompts)
 PLUGIN_CACHE = Path.home() / ".claude" / "plugins" / "cache"
 
 def _plugin_dir(name):
     """Resolve a plugin's cache dir portably -- hardcoding one machine's absolute path
     (e.g. C:\\Users\\<you>\\...) made the plugin arms unreproducible off that box.
     Order: env override -> latest version dir under ~/.claude/plugins/cache -> clear error.
-    Resolved per-arm at use-site so a missing ponytail install can't block a ken-only run."""
+    Resolved per-arm at use-site resolved per-arm at use-site."""
     env = os.environ.get(f"{name.upper()}_PLUGIN_DIR")
     if env: return env
     base = PLUGIN_CACHE / name / name

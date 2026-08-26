@@ -3,8 +3,7 @@
 //
 // SessionStart context is parent-thread only and never reaches subagents, so
 // without this every Task-spawned agent runs ken-unaware. When ken mode is
-// active, inject the same ruleset into each subagent (the ponytail-complement
-// delta applies here too, via getKenInstructions).
+// active, inject the same ruleset into each subagent.
 //
 // Scoping (opt-in): set KEN_SUBAGENT_MATCHER to a regex and the ruleset is
 // injected only into subagents whose agent_type matches. The regex is

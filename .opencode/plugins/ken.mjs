@@ -4,7 +4,7 @@
 // intensity, persists /ken mode switches, and registers slash commands so
 // they work when the package is installed from npm. Reuses the shared
 // instruction builder so Claude Code, Codex, pi, and OpenCode all read one
-// source of truth (including the ponytail-complement delta).
+// source of truth.
 //
 // OpenCode loads this as a server plugin — add it to your opencode.json:
 //   { "plugin": ["@rajnandan1/ken"] }

@@ -16,8 +16,6 @@ test("resolveMode falls back to a runtime intensity for off/unknown/empty", () =
 });
 
 test("buildInstructions returns the ruleset tagged with the resolved mode", () => {
-  // Holds on both paths the shared builder can take: the full ruleset and the
-  // ponytail-complement delta both open with this header and carry the mode.
   const text = buildInstructions("ultra");
   assert.match(text, /KEN MODE ACTIVE/);
   assert.match(text, /ultra/);

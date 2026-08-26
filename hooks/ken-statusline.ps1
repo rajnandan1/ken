@@ -12,23 +12,14 @@ try {
     exit 0
 }
 
-# Delta complement: when ponytail is also active, say so in the badge.
-$Pt = ""
-$PtFlag = Join-Path $ClaudeDir ".ponytail-active"
-if (Test-Path $PtFlag) {
-    try {
-        $PtMode = (Get-Content $PtFlag -ErrorAction Stop | Select-Object -First 1).Trim()
-        if ($PtMode -and $PtMode -ne "off") { $Pt = "+PT" }
-    } catch {}
-}
 
 $Esc = [char]27
 # ultra is the high-intensity mode; flag it amber so it stands out from the
 # default green. The level is still in the text, so color is a redundant cue.
 $Color = if ($Mode -eq "ultra") { "173" } else { "108" }
 if ([string]::IsNullOrEmpty($Mode) -or $Mode -eq "full") {
-    [Console]::Write("${Esc}[38;5;${Color}m[KEN$Pt]${Esc}[0m")
+    [Console]::Write("${Esc}[38;5;${Color}m[KEN]${Esc}[0m")
 } else {
     $Suffix = $Mode.ToUpperInvariant()
-    [Console]::Write("${Esc}[38;5;${Color}m[KEN:$Suffix$Pt]${Esc}[0m")
+    [Console]::Write("${Esc}[38;5;${Color}m[KEN:$Suffix]${Esc}[0m")
 }

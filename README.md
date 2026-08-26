@@ -15,9 +15,8 @@ Ken Thompson wrote Unix in three weeks by thinking first, stealing proven
 ideas, building bottom-up, and rewriting anything that fought back. **ken**
 puts that discipline inside your AI agent.
 
-Not another "write less code" skill: [ponytail](https://github.com/DietrichGebert/ponytail)
-already owns sizing, and ken is built to **complement** it (see below). Ken
-governs *method* — how the code comes to exist:
+Not another "write less code" skill. Ken governs *method* — how the code
+comes to exist:
 
 ```
 The loop, in order, on every task:
@@ -35,24 +34,20 @@ dependency before using it — never paste code you can't explain line by line),
 know every line, debug the model not the symptom, no ceremony. Every rule
 traces to Thompson's own words — receipts in [PROVENANCE.md](PROVENANCE.md).
 
-## Numbers
+## What ken measures
 
-First measured round (2026-08-26; 3 arms × 5 tasks × 3 models × 3 repeats via
-OpenRouter, single-shot; median LOC / executed-correctness gate):
+Ken makes method claims, so lines of code are not its benchmark. What it
+measures instead: does the agent **rewrite** a thrice-patched unit instead of
+adding patch four, **reuse** the project's helper instead of reinventing it,
+fix the shared **root cause** instead of the named symptom, **vouch** for what
+it depends on, and leave a **runnable check** behind. The behavior gates and
+agentic quality tier in [benchmarks/](benchmarks/) measure exactly that; a
+maintenance-over-time benchmark — scoring what *survives* a sequence of
+tickets, not what gets written — is under design.
 
-| arm | haiku-4.5 | gpt-5.4-mini | gemini-3.5-flash | correctness |
-|---|--:|--:|--:|--:|
-| baseline (no skill) | 90 | 16 | 28 | 37/45 |
-| ponytail | 9 | 7 | 10 | 45/45 |
-| **ken** | **15** | **11** | **22** | **45/45** |
-
-Ken cuts 31–83% of the code versus no skill and passed every executed
-correctness check; all 8 gate failures in the run were baseline cells. Ponytail
-stays smaller — it is the sizing skill; ken is the method skill. Single-shot
-numbers overstate any skill's win (a bare model pads its answer with prose);
-method, limits, and the full honesty notes: [benchmarks/results/](benchmarks/results/).
-Nothing in this repo claims a number that wasn't measured — `/ken-gain` renders
-only what `benchmarks/results/` contains.
+**No numbers are claimed until they are measured.** Every measured run lives
+in [benchmarks/results/](benchmarks/results/); `/ken-gain` renders only what
+that directory contains.
 
 ## Install
 
@@ -101,16 +96,6 @@ Deliberate brute-force ceilings are marked in code:
 // ken: linear scan; sort + bisect when n > 10k measured
 ```
 
-## Runs alongside ponytail
-
-Both installed? They complement instead of compete. When ponytail is active,
-ken injects only its **delta** — think-first, steal-don't-invent, bottom-up,
-brute-force ceilings, vouched dependencies, debug-the-model — plus one
-arbitration rule: *a unit on its third patch gets the rewrite even though it's
-a bigger diff; laziest-over-time beats laziest-today.* One engineer's voice,
-not two. `stop ken` turns off only ken; `normal mode` turns off both; the
-statusline badge shows `[KEN+PT]`.
-
 ## What ken never does
 
 Brute force never overrides correctness: input validation at trust boundaries,
@@ -129,10 +114,8 @@ any other plugin's statusline segment intact).
 Rule-by-rule sourcing with ratings: [PROVENANCE.md](PROVENANCE.md) — including
 the famous lines that could *not* be verified and are marked attributed.
 
-Ken's plugin architecture is derived from
-[ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert (MIT
-— see [LICENSE](LICENSE)), which pioneered the single-source-ruleset,
-multi-host-adapter design ken reuses. The benchmark harness is ponytail's,
-with ken arms and a rewrite behavior probe.
+Ken's plugin architecture and benchmark harness are derived from
+[ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert
+(MIT — see [LICENSE](LICENSE)).
 
 MIT © Raj Nandan Sharma

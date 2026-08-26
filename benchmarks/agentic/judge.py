@@ -158,7 +158,7 @@ def run(run_dir, key):
         if isinstance(r["over_engineering"], int): by_arm[r["arm"]].append(r["over_engineering"])
     print(f"\n=== over-engineering by arm (judge: {JUDGE_MODEL}, 0=minimal .. 3=over-built) ===")
     print(f"  {'arm':16} {'n':>4} {'mean':>6} {'max':>4}")
-    for arm in ["baseline", "ken", "ponytail", "yagni-oneliner"]:
+    for arm in ["baseline", "ken", "yagni-oneliner"]:
         v = by_arm.get(arm, [])
         if v: print(f"  {arm:16} {len(v):>4} {sum(v)/len(v):>6.2f} {max(v):>4}")
     worst = sorted([r for r in scored if isinstance(r["over_engineering"], int) and r["over_engineering"] >= 2],

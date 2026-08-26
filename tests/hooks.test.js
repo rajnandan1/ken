@@ -489,24 +489,4 @@ try {
   if (prevEnvModeRev === undefined) delete process.env.KEN_DEFAULT_MODE; else process.env.KEN_DEFAULT_MODE = prevEnvModeRev;
 }
 
-// ken delta complement: with ponytail's flag present in the same state dir, the
-// activate and subagent hooks must inject only ken's delta, never a second full
-// persona; a flag saying "off" restores the full ruleset.
-const deltaHome = path.join(temp, 'delta-home');
-const deltaDir = path.join(deltaHome, '.claude');
-fs.mkdirSync(deltaDir, { recursive: true });
-fs.writeFileSync(path.join(deltaDir, '.ponytail-active'), 'full');
-result = run('ken-activate.js', { HOME: deltaHome, USERPROFILE: deltaHome, KEN_DEFAULT_MODE: 'full' });
-assert.equal(result.status, 0, result.stderr);
-assert.match(result.stdout, /complementing ponytail \(full\)/);
-assert.match(result.stdout, /laziest-over-time beats laziest-today/);
-assert.ok(!result.stdout.includes('## The loop'), 'delta must not carry the full persona');
-result = run('ken-subagent.js', { HOME: deltaHome, USERPROFILE: deltaHome });
-assert.equal(result.status, 0, result.stderr);
-output = JSON.parse(result.stdout);
-assert.match(output.hookSpecificOutput.additionalContext, /complementing ponytail/);
-fs.writeFileSync(path.join(deltaDir, '.ponytail-active'), 'off');
-result = run('ken-activate.js', { HOME: deltaHome, USERPROFILE: deltaHome, KEN_DEFAULT_MODE: 'full' });
-assert.ok(result.stdout.includes('## The loop'), 'a ponytail flag saying off must restore the full ruleset');
-
 console.log('hook compatibility checks passed');

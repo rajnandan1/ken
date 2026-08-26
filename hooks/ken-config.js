@@ -36,8 +36,7 @@ function normalizePersistedMode(mode) {
 // "stop ken" / "normal mode" turn ken off, but only as a standalone command.
 // Matching the phrase anywhere in the message would fire on prose that merely
 // mentions someone named Ken — so require the whole message to be the command,
-// ignoring case and trailing punctuation. "normal mode" is the off-phrase
-// shared with ponytail: when both are installed it turns both off.
+// ignoring case and trailing punctuation.
 function isDeactivationCommand(text) {
   const t = String(text || '').trim().toLowerCase().replace(/[.!?\s]+$/, '');
   return t === 'stop ken' || t === 'normal mode';

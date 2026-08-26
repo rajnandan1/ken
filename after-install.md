@@ -20,5 +20,3 @@ Commands:
 - `/ken-help`
 
 Bundled skills are available as `ken:ken`, `ken:ken-review`, `ken:ken-audit`, `ken:ken-debt`, `ken:ken-gain`, and `ken:ken-help`.
-
-Ken complements ponytail: when both are active, ponytail governs sizing and ken governs method — ken injects only its delta.
