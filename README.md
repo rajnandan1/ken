@@ -46,10 +46,13 @@ maintenance-over-time benchmark — scoring what *survives* a sequence of
 tickets, not what gets written — is under design.
 
 **Only measured numbers are claimed — including the ones that don't flatter
-ken.** The first maintenance round (haiku, 3 repeats, [full entry](benchmarks/results/2026-08-26-maintenance-v1-haiku.md))
-measured **no ken advantage**: median Survival 7/9 vs baseline's 8/9, reuse
-tied, root-cause behind, and neither arm ever rewrote a rot unit — the
-injected ruleset (activation verified) did not change haiku's method. That is
+ken.** The first maintenance rounds ([haiku](benchmarks/results/2026-08-26-maintenance-v1-haiku.md),
+[sonnet](benchmarks/results/2026-08-26-maintenance-v1-sonnet.md); 3 repeats each)
+measured **no ken advantage on either model**: median Survival 7/9 vs
+baseline's 8/9 both times, reuse tied, root-cause behind twice (ken guarded
+the named symptom in 6/6 runs while baseline fixed the shared helper in 3/6),
+and 1 rewrite in 24 rot cells — the injected ruleset (activation verified)
+did not change the method. That is
 the benchmark doing its job; stronger models and ruleset iterations get
 measured next, and every run lands in
 [benchmarks/results/](benchmarks/results/) whatever it shows. `/ken-gain`
