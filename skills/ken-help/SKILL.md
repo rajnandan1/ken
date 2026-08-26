@@ -1,9 +1,9 @@
 ---
 name: ken-help
 description: >
-  Quick-reference card for all ken modes, skills, and commands.
-  One-shot display, not a persistent mode. Trigger: /ken-help,
-  "ken help", "what ken commands", "how do I use ken".
+    Quick-reference card for all ken modes, skills, and commands.
+    One-shot display, not a persistent mode. Trigger: /ken-help,
+    "ken help", "what ken commands", "how do I use ken".
 ---
 
 # Ken Help
@@ -13,28 +13,27 @@ write flag files, or persist anything.
 
 ## Levels
 
-| Level | Trigger | What changes |
-|-------|---------|-------------|
-| **Lite** | `/ken lite` | Build what's asked, name the Thompson move (the rewrite, the brute-force cut) in one line. |
-| **Full** | `/ken` | The loop enforced: think first → steal → bottom-up → brute force → try it → throw it out. Default. |
-| **Ultra** | `/ken ultra` | Darwinist: rewrite-first on rot, features argued in explicitly, no new dependencies at all. |
+| Level     | Trigger      | What changes                                                                                       |
+| --------- | ------------ | -------------------------------------------------------------------------------------------------- |
+| **Lite**  | `/ken lite`  | Build what's asked, name the Thompson move (the rewrite, the brute-force cut) in one line.         |
+| **Full**  | `/ken`       | The loop enforced: think first → steal → bottom-up → brute force → try it → throw it out. Default. |
+| **Ultra** | `/ken ultra` | Darwinist: rewrite-first on rot, require an argument for each feature, no new dependencies.        |
 
 Level sticks until changed or session end.
 
 ## Skills
 
-| Skill | Trigger | What it does |
-|-------|---------|--------------|
-| **ken** | `/ken` | Thompson mode itself. Think, steal, build bottom-up, brute force, rewrite. |
-| **ken-review** | `/ken-review` | Method review: `L42: rot: third patch on this unit. Rewrite, ~25 lines.` |
-| **ken-audit** | `/ken-audit` | Whole-repo method audit: ranked list of what to rewrite or remove. |
-| **ken-debt** | `/ken-debt` | Harvest `ken:` ceiling comments into a tracked ledger. |
-| **ken-gain** | `/ken-gain` | Measured-impact scoreboard from ken's own benchmark results. |
-| **ken-help** | `/ken-help` | This card. |
+| Skill          | Trigger       | What it does                                                               |
+| -------------- | ------------- | -------------------------------------------------------------------------- |
+| **ken**        | `/ken`        | Thompson mode itself. Think, steal, build bottom-up, brute force, rewrite. |
+| **ken-review** | `/ken-review` | Method review: `L42: rot: third patch on this unit. Rewrite, ~25 lines.`   |
+| **ken-audit**  | `/ken-audit`  | Whole-repo method audit: ranked list of what to rewrite or remove.         |
+| **ken-debt**   | `/ken-debt`   | Harvest `ken:` ceiling comments into a tracked ledger.                     |
+| **ken-gain**   | `/ken-gain`   | Measured-impact scoreboard from ken's own benchmark results.               |
+| **ken-help**   | `/ken-help`   | This card.                                                                 |
 
 Codex uses `@ken`, `@ken-review`, and `@ken-help`; Claude Code and OpenCode
 use the slash-command forms above (OpenCode ships all six as slash commands).
-
 
 ## Deactivate
 
@@ -45,17 +44,19 @@ Say "stop ken" or "normal mode". Resume anytime with `/ken`. `/ken off` also wor
 Default mode = `full`, auto-active every session. Change it:
 
 **Environment variable** (highest priority):
+
 ```bash
 export KEN_DEFAULT_MODE=ultra
 ```
 
 **Config file** (`~/.config/ken/config.json`, Windows: `%APPDATA%\ken\config.json`):
+
 ```json
 { "defaultMode": "lite" }
 ```
 
-Set `"off"` to disable auto-activation on session start, activate manually
-with `/ken` when wanted.
+Set `"off"` to disable auto-activation on session start. Use `/ken` to
+activate it when wanted.
 
 Resolution: env var > config file > `full`.
 

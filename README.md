@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
-    <img src="assets/logo.svg" width="220" alt="ken — Thompson-mode systems discipline">
+    <img src="assets/logo.svg" width="220" alt="ken: Thompson-mode systems discipline">
   </picture>
 </p>
 
@@ -15,14 +15,13 @@ Ken Thompson wrote Unix in three weeks by thinking first, stealing proven
 ideas, building bottom-up, and rewriting anything that fought back. **ken**
 puts that discipline inside your AI agent.
 
-Not another "write less code" skill. Ken governs *method* — how the code
-comes to exist:
+Ken governs the method that produces code:
 
 ```
 The loop, in order, on every task:
 1. Think first        → build the mental model before touching the code
 2. Steal, don't invent → this codebase, the stdlib, or a classic beats invention
-3. Build bottom-up    → from primitives you fully understand; layers are a morass
+3. Build bottom-up    → from primitives you can explain line by line; layers are a morass
 4. Brute force        → the plain algorithm until measurement proves it wrong
 5. Try it             → working code settles arguments prose can't
 6. Throw it out       → a unit on its third patch gets rewritten, not patched a fourth
@@ -30,9 +29,9 @@ The loop, in order, on every task:
 
 Plus the rules the loop rests on: features default to no, interfaces few and
 small, no layer that only translates, a minimal trusted base (vouch for a
-dependency before using it — never paste code you can't explain line by line),
+dependency before using it; never paste code you can't explain line by line),
 know every line, debug the model not the symptom, no ceremony. Every rule
-traces to Thompson's own words — receipts in [PROVENANCE.md](PROVENANCE.md).
+traces to Thompson's own words. [PROVENANCE.md](PROVENANCE.md) lists the sources.
 
 ## What ken measures
 
@@ -41,15 +40,14 @@ measures instead: does the agent **rewrite** a thrice-patched unit instead of
 adding patch four, **reuse** the project's helper instead of reinventing it,
 fix the shared **root cause** instead of the named symptom, **vouch** for what
 it depends on, and leave a **runnable check** behind. The behavior gates and
-agentic quality tier in [benchmarks/](benchmarks/) measure exactly that; a
-maintenance-over-time benchmark — scoring what *survives* a sequence of
-tickets, not what gets written — is under design.
+agentic quality tier in [benchmarks/](benchmarks/) measure those behaviors. A
+maintenance-over-time benchmark scores what survives a sequence of tickets.
 
-**Only measured numbers are claimed — including the ones that don't flatter
-ken.** Measured so far ([haiku](benchmarks/results/2026-08-26-maintenance-v1-haiku.md) /
+**Ken claims measured numbers, including results that do not flatter it.**
+Measured so far ([haiku](benchmarks/results/2026-08-26-maintenance-v1-haiku.md) /
 [sonnet](benchmarks/results/2026-08-26-maintenance-v1-sonnet.md) v1.0.0 rounds, then the
 [iteration-1 verdict](benchmarks/results/2026-08-26-maintenance-v1_1-verdict.md)):
-v1.0.0's aspirational rules changed nothing — no advantage on either model,
+v1.0.0's aspirational rules changed nothing: no advantage on either model,
 1 rewrite in 24 rot cells. Iteration 1 made two rules procedural and
 re-measured under a pre-registered keep/revert rule: **the countable rewrite
 trigger took rewrite-on-rot from 0/2 to 2/2 in all three runs** (baseline,
@@ -57,27 +55,27 @@ same tickets, same day: still 0/2) with survival up, so **v1.1 shipped**.
 Iterations 2 and 3 ([v1.2](benchmarks/results/2026-08-26-maintenance-v1_2-verdict.md),
 [v1.3](benchmarks/results/2026-08-26-maintenance-v1_3-verdict.md)) attacked the
 root-cause gap with sharper and then tool-literal wordings and **both reverted
-under the same pre-registered rule** — nine of nine runs across three
+under the same pre-registered rule**. Nine of nine runs across three
 instruction forms guarded the ticket-named site. Documented as a measured
-limit, not respun: single-shot ken reliably rewrites rot visible at the edit
+limit: single-shot ken rewrites rot visible at the edit
 site, and no injected instruction induces cross-file caller exploration. The
-fix, if ever built, is structural — and per ken's own rules, it isn't built
-until argued in. That is
-the benchmark doing its job; stronger models and ruleset iterations get
-measured next, and every run lands in
-[benchmarks/results/](benchmarks/results/) whatever it shows. `/ken-gain`
+fix, if built, requires a structural change. Ken's rules require someone to
+argue for that feature first. Stronger models and later ruleset iterations get
+measured next, and each run lands in [benchmarks/results/](benchmarks/results/)
+regardless of its result. `/ken-gain`
 renders only what that directory contains.
 
 ## Install
 
-Node.js must be on your PATH for the two tiny lifecycle hooks (skills still
-work without it; activation just stays quiet).
+Node.js must be on your PATH for the two lifecycle hooks. Skills work without
+it, but activation stays quiet.
 
 ### Claude Code
 
 ```
 /plugin marketplace add rajnandan1/ken
 ```
+
 ```
 /plugin install ken@ken
 ```
@@ -85,20 +83,20 @@ work without it; activation just stays quiet).
 From a local clone: `claude plugin marketplace add /path/to/ken` then
 `claude plugin install ken@ken`.
 
-### Everyone else
+### Other hosts
 
 Cursor, Windsurf, Cline, Copilot, Gemini CLI, OpenCode, pi, Hermes, Qoder,
-Kiro, Grok, Codex, and any `AGENTS.md`-reading agent — see
+Kiro, Grok, Codex, and any `AGENTS.md`-reading agent: see
 [docs/agent-portability.md](docs/agent-portability.md). MCP-only hosts:
 [ken-mcp/](ken-mcp/).
 
 ## Levels
 
-| Level | Trigger | What changes |
-|-------|---------|-------------|
-| lite | `/ken lite` | Build what's asked; name the Thompson move in one line. |
-| full | `/ken` | The loop enforced. Brute force until measured. Rewrite over third patch. Default. |
-| ultra | `/ken ultra` | Darwinist: rewrite-first on rot, features argued in explicitly, no new dependencies. |
+| Level | Trigger      | What changes                                                                                |
+| ----- | ------------ | ------------------------------------------------------------------------------------------- |
+| lite  | `/ken lite`  | Build what's asked; name the Thompson move in one line.                                     |
+| full  | `/ken`       | The loop enforced. Brute force until measured. Rewrite over third patch. Default.           |
+| ultra | `/ken ultra` | Darwinist: rewrite-first on rot, require an argument for each feature, no new dependencies. |
 
 `/ken default <level>` persists across sessions (or `KEN_DEFAULT_MODE`, or
 `~/.config/ken/config.json`). Off: say `stop ken`, or `/ken off`.
@@ -115,26 +113,26 @@ Deliberate brute-force ceilings are marked in code:
 // ken: linear scan; sort + bisect when n > 10k measured
 ```
 
-## What ken never does
+## Safety limits
 
-Brute force never overrides correctness: input validation at trust boundaries,
-error handling that prevents data loss, security, accessibility, and anything
-you explicitly asked for are never simplified away. And it never rewrites what
-it doesn't yet understand — think-first is the gate.
+Brute force preserves correctness, input validation at trust boundaries, error
+handling that prevents data loss, security, accessibility, and user
+requirements. Ken traces a unit before rewriting it.
 
 ## Uninstall
 
 Each host's own uninstall removes the plugin files; `node scripts/uninstall.js`
-cleans up what those can't see (mode flag, config, statusline entry — leaving
+cleans up what those can't see (mode flag, config, statusline entry, while leaving
 any other plugin's statusline segment intact).
 
 ## Provenance & credits
 
-Rule-by-rule sourcing with ratings: [PROVENANCE.md](PROVENANCE.md) — including
-the famous lines that could *not* be verified and are marked attributed.
+Rule-by-rule sourcing with ratings appears in [PROVENANCE.md](PROVENANCE.md),
+including famous lines that researchers could not verify. The file marks those
+lines as attributed.
 
 Ken's plugin architecture and benchmark harness are derived from
 [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert
-(MIT — see [LICENSE](LICENSE)).
+(MIT; see [LICENSE](LICENSE)).
 
 MIT © Raj Nandan Sharma

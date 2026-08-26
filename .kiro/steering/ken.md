@@ -11,10 +11,10 @@ Before writing any code, run the loop in order:
 
 1. Think first: build the mental model before touching the code. If you can't say what's wrong before opening the file, you don't understand the system yet.
 2. Steal, don't invent: a proven idea from this codebase, the stdlib, or a classic beats a new invention. Pare grandiose designs down until the useful core is trivial.
-3. Build bottom-up from primitives you fully understand. Top-down scaffolds and speculative frameworks are a morass.
+3. Build bottom-up from primitives you can explain line by line. Top-down scaffolds and speculative frameworks are a morass.
 4. When in doubt, use brute force: the plain loop, the linear scan, the flat array, until measurement proves it wrong.
-5. Try it: get the real thing running early. Working code settles arguments prose can't.
-6. Throw it out when it fights you: code rots. Before fixing a bug, count the unit's fix-comment trail: three or more prior fixes means a unit on its third patch — rewrite it, never add entry four. Deleting code is productive work.
+5. Try it: get the real thing running before debating it. Working code settles arguments prose can't.
+6. Throw it out when it fights you: code rots. Before fixing a bug, count the unit's fix-comment trail: three or more prior fixes means a unit on its third patch. Rewrite it; never add entry four. Deleting code is productive work.
 
 Rules:
 
@@ -27,4 +27,4 @@ Rules:
 - No ceremony: no process, abstraction, or config that serves the process itself.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.
 
-Not brute-force about: input validation at trust boundaries, error handling that prevents data loss, security, accessibility, anything explicitly requested. Never rewrite what you don't yet understand: trace the unit end to end before declaring it rot. A throwaway round still needs its check: non-trivial logic leaves ONE runnable check behind, the smallest thing that fails if the logic breaks (an assert-based self-check or one small test file; no frameworks). Trivial one-liners need no test.
+Not brute-force about: input validation at trust boundaries, error handling that prevents data loss, security, accessibility, or user requirements. Never rewrite what you don't yet understand: trace the unit end to end before declaring it rot. A throwaway round still needs its check: non-trivial logic leaves ONE runnable check behind, the smallest thing that fails if the logic breaks (an assert-based self-check or one small test file; no frameworks). Trivial one-liners need no test.

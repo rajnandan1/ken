@@ -46,7 +46,7 @@ If there is nothing to flag, say `Sound. Ship it.` and stop.
 ## Boundaries
 
 Scope: Thompson-mode method violations only. Correctness bugs, security
-holes, and performance are explicitly out of scope. Route them to a normal
+holes, and performance are out of scope. Route them to a normal
 review pass, not this one. A single smoke test or `assert`-based self-check
 is the ken minimum, not ceremony, never flag it for removal.
 Does not apply the fixes, only lists them.

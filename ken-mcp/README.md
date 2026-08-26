@@ -4,8 +4,8 @@ An MCP server that serves Ken's Thompson-mode instructions. It exposes the
 same ruleset the Claude hooks and Pi extension use, so every host emits
 identical rules.
 
-It is not a replacement for the always-on adapters. Ken normally lives in the
-system context every turn. MCP prompts are user-invoked, and there is no
+The always-on adapters put Ken in the system context each turn. MCP prompts
+require user invocation, and there is no
 portable MCP primitive for "inject this into every turn" across hosts. So this
 server is the clean option for MCP hosts whose only injection point is the
 prompt menu, or that pull context through tools.
@@ -42,5 +42,4 @@ npm test
 ```
 
 Covers mode resolution and the instruction text. The MCP wiring in `index.js`
-is intentionally thin: it just maps the prompt and tool onto
-`buildInstructions`.
+maps the prompt and tool onto `buildInstructions`.

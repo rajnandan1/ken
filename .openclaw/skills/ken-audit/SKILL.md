@@ -35,5 +35,5 @@ Nothing to flag: `Sound. Ship it.`
 ## Boundaries
 
 Scope: Thompson-mode method violations only. Correctness bugs, security
-holes, and performance are explicitly out of scope. Route them to a normal
+holes, and performance are out of scope. Route them to a normal
 review pass. Lists findings, applies nothing. One-shot.

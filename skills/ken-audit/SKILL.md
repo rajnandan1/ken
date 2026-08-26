@@ -1,12 +1,12 @@
 ---
 name: ken-audit
 description: >
-  Whole-repo audit for Thompson-mode violations. Like ken-review, but scans
-  the entire codebase instead of a diff: a ranked list of what to rewrite,
-  delete, or take back into the trusted base. Use when the user says "audit
-  this codebase", "audit for rot", "what should be rewritten in this repo",
-  "find the rot", "ken-audit", or "/ken-audit". One-shot report, does not
-  apply fixes.
+    Whole-repo audit for Thompson-mode violations. Like ken-review, but scans
+    the entire codebase instead of a diff: a ranked list of what to rewrite,
+    delete, or take back into the trusted base. Use when the user says "audit
+    this codebase", "audit for rot", "what should be rewritten in this repo",
+    "find the rot", "ken-audit", or "/ken-audit". One-shot report, does not
+    apply fixes.
 ---
 
 ken-review, repo-wide. Scan the whole tree instead of a diff. Rank findings
@@ -39,5 +39,5 @@ Nothing to flag: `Sound. Ship it.`
 ## Boundaries
 
 Scope: Thompson-mode method violations only. Correctness bugs, security
-holes, and performance are explicitly out of scope. Route them to a normal
+holes, and performance are out of scope. Route them to a normal
 review pass. Lists findings, applies nothing. One-shot.
