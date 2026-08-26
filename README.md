@@ -15,8 +15,6 @@ Ken Thompson wrote Unix in three weeks by thinking first, stealing proven
 ideas, building bottom-up, and rewriting anything that fought back. **ken**
 puts that discipline inside your AI agent.
 
-Ken governs the method that produces code:
-
 ```
 The loop, in order, on every task:
 1. Think first        → build the mental model before touching the code
@@ -35,15 +33,15 @@ traces to Thompson's own words. [PROVENANCE.md](PROVENANCE.md) lists the sources
 
 ## What ken measures
 
-Ken makes method claims, so lines of code are not its benchmark. What it
-measures instead: does the agent **rewrite** a thrice-patched unit instead of
-adding patch four, **reuse** the project's helper instead of reinventing it,
-fix the shared **root cause** instead of the named symptom, **vouch** for what
-it depends on, and leave a **runnable check** behind. The behavior gates and
-agentic quality tier in [benchmarks/](benchmarks/) measure those behaviors. A
-maintenance-over-time benchmark scores what survives a sequence of tickets.
+Ken makes method claims, so its benchmark counts behavior, not lines of code.
+Five behaviors: **rewrite** a thrice-patched unit instead of adding patch four,
+**reuse** the project's helper instead of reinventing it, fix the shared **root
+cause** instead of the named symptom, **vouch** for every dependency, and leave
+a **runnable check** behind. The behavior gates and agentic quality tier in
+[benchmarks/](benchmarks/) score them; a maintenance-over-time benchmark scores
+what survives a sequence of tickets.
 
-### The one rule with measured receipts
+### The rewrite rule, measured
 
 ```mermaid
 flowchart LR
@@ -52,11 +50,16 @@ flowchart LR
     B -->|fewer| D[smallest correct fix]
 ```
 
-Same benchmark round, same bug ticket, same function carrying three dated
-fix-comments — verbatim agent output from the kept workspaces
-(run `20260826-203814`, haiku, 3 runs per arm):
+The rule in one line: a function already wearing three dated fix-comments gets
+rewritten, never patched a fourth time. Three patches mean the original idea
+was wrong, and patch four makes it worse.
 
-**Without ken** — patch four, appended below the existing trail, in 3 of 3 runs:
+To check the agent obeys that, the benchmark hands the same broken function and
+the same bug ticket to the same small model (haiku), 3 runs with ken and 3
+without. Here is what those runs produced (run `20260826-203814`):
+
+**Without ken**, the agent glues a fourth fix onto the bottom of the trail, 3
+of 3 runs:
 
 ```python
     # fix 2026-08-26 (#??): bare numbers are seconds (tracker exports)
@@ -64,7 +67,8 @@ fix-comments — verbatim agent output from the kept workspaces
         total += float(num)
 ```
 
-**With ken** — a rewrite, trail gone, in 3 of 3 runs:
+**With ken**, the agent throws the function out, fix-comment trail included,
+and writes it again, 3 of 3 runs:
 
 ```python
 def parse_duration(s):
@@ -84,11 +88,13 @@ def parse_duration(s):
     return int(total)
 ```
 
-Across that round ken rewrote 6 of 6 rot-seeded units; the no-skill arm
-rewrote 0 of 6. Survival tied at 8/9. The same data also records what ken
-does *not* fix: it guarded a ticket-named call site instead of the shared
-helper in 3 of 3 runs — a documented limit, not a hidden one. Every round is
-in [benchmarks/results/](benchmarks/results/).
+Across that round ken rewrote 6 of 6 planted-rot functions; without ken, 0 of 6.
+Neither arm broke more than the other: survival tied at 8/9.
+
+The same runs catch ken failing a different rule. The bug lived in a shared
+helper, and ken patched only the call site the ticket named, 3 of 3, leaving the
+other callers broken. Every round, wins and misses, sits in
+[benchmarks/results/](benchmarks/results/).
 
 ## Install
 
@@ -140,21 +146,20 @@ Deliberate brute-force ceilings are marked in code:
 
 ## Safety limits
 
-Brute force preserves correctness, input validation at trust boundaries, error
-handling that prevents data loss, security, accessibility, and user
-requirements. Ken traces a unit before rewriting it.
+Brute force stops at correctness, input validation at trust boundaries, error
+handling that prevents data loss, security, accessibility, and what you asked
+for. Ken traces a unit end to end before rewriting it.
 
 ## Uninstall
 
-Each host's own uninstall removes the plugin files; `node scripts/uninstall.js`
-cleans up what those can't see (mode flag, config, statusline entry, while leaving
-any other plugin's statusline segment intact).
+Each host's own uninstall removes the plugin files. `node scripts/uninstall.js`
+clears what they miss: the mode flag, the config, and ken's statusline entry,
+leaving other plugins' statusline segments alone.
 
 ## Provenance & credits
 
-Rule-by-rule sourcing with ratings appears in [PROVENANCE.md](PROVENANCE.md),
-including famous lines that researchers could not verify. The file marks those
-lines as attributed.
+[PROVENANCE.md](PROVENANCE.md) sources every rule and rates it, down to the
+famous lines researchers could not verify, which it marks as attributed.
 
 Ken's plugin architecture and benchmark harness are derived from
 [ponytail](https://github.com/DietrichGebert/ponytail) by Dietrich Gebert
