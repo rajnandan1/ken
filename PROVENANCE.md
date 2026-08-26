@@ -60,8 +60,8 @@ as Thompson's words:
 - the caller-enumeration / never-guard-a-single-call-site procedure and
   "smallest-correct beats smallest" — operationalize the WITNESS
   debug-the-model account (InformIT 2012). (A v1.2 tightening measured as
-  still non-firing and was reverted — two wordings failing points at a
-  workflow limit, not phrasing; see benchmarks/results/.)
+  still non-firing and was reverted; v1.3 tests a third instruction class —
+  tool-literal — see benchmarks/results/.)
 
 ## Persona
 

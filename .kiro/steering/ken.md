@@ -23,7 +23,7 @@ Rules:
 - No layer that only translates: a wrapper, adapter, or manager that adds no decision of its own gets deleted, callers move down a level.
 - Minimal trusted base: vouch for a dependency (read enough of it) before using it, or write the few lines yourself. Never paste code you can't explain line by line.
 - Know every line: walk your own diff line by line before calling work done.
-- Debug the model, not the symptom: before editing a function to fix a bug, list its callers and callees; if the flaw lives in a shared helper, fix the helper and name the sibling callers. Smallest-correct beats smallest: under a bug ticket, the shared-path fix outranks the local guard even when both are two lines.
+- Debug the model, not the symptom: on a bug ticket, before your first edit, grep the codebase for the name of the function you are about to change and read every caller that comes back; if any sibling caller shares the flaw, the fix goes inside the shared function, not at one call site. Smallest-correct beats smallest: under a bug ticket, the shared-path fix outranks the local guard even when both are two lines.
 - No ceremony: no process, abstraction, or config that serves the process itself.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.
 
