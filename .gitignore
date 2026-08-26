@@ -20,7 +20,6 @@ benchmarks/agentic/runs/
 # Claude Code local settings (machine-specific permission grants)
 .claude/settings.local.json
 
-# local-only: ponytail reference checkout, wayfinder tracker, domain glossary
 tmp/
 .scratch/
 CONTEXT.md
