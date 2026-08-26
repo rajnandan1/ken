@@ -46,13 +46,16 @@ maintenance-over-time benchmark — scoring what *survives* a sequence of
 tickets, not what gets written — is under design.
 
 **Only measured numbers are claimed — including the ones that don't flatter
-ken.** The first maintenance rounds ([haiku](benchmarks/results/2026-08-26-maintenance-v1-haiku.md),
-[sonnet](benchmarks/results/2026-08-26-maintenance-v1-sonnet.md); 3 repeats each)
-measured **no ken advantage on either model**: median Survival 7/9 vs
-baseline's 8/9 both times, reuse tied, root-cause behind twice (ken guarded
-the named symptom in 6/6 runs while baseline fixed the shared helper in 3/6),
-and 1 rewrite in 24 rot cells — the injected ruleset (activation verified)
-did not change the method. That is
+ken.** Measured so far ([haiku](benchmarks/results/2026-08-26-maintenance-v1-haiku.md) /
+[sonnet](benchmarks/results/2026-08-26-maintenance-v1-sonnet.md) v1.0.0 rounds, then the
+[iteration-1 verdict](benchmarks/results/2026-08-26-maintenance-v1_1-verdict.md)):
+v1.0.0's aspirational rules changed nothing — no advantage on either model,
+1 rewrite in 24 rot cells. Iteration 1 made two rules procedural and
+re-measured under a pre-registered keep/revert rule: **the countable rewrite
+trigger took rewrite-on-rot from 0/2 to 2/2 in all three runs** (baseline,
+same tickets, same day: still 0/2) with survival up, so **v1.1 shipped**.
+Still honest about what hasn't moved: root-cause remains stuck (ken guards
+the named symptom despite the new enumeration rule) — iteration 2's target. That is
 the benchmark doing its job; stronger models and ruleset iterations get
 measured next, and every run lands in
 [benchmarks/results/](benchmarks/results/) whatever it shows. `/ken-gain`
