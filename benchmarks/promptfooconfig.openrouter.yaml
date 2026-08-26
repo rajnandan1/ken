@@ -21,6 +21,8 @@ prompts:
     label: ponytail
   - id: file://arms/ken.js
     label: ken
+  - id: file://arms/ponytail-ken.js
+    label: ponytail+ken
 
 defaultTest:
   assert:

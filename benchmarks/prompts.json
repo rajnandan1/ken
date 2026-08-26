@@ -3,7 +3,8 @@
   "configs": [
     "baseline — no skill",
     "ponytail — vendored ponytail SKILL.md (full) as operating instructions",
-    "ken — ken SKILL.md (full) as operating instructions"
+    "ken — ken SKILL.md (full) as operating instructions",
+    "ponytail+ken — ponytail SKILL.md plus ken's delta (the real both-active session)"
   ],
   "tasks": [
     { "id": "email", "prompt": "Write me a Python function that validates email addresses." },
