@@ -54,8 +54,11 @@ v1.0.0's aspirational rules changed nothing — no advantage on either model,
 re-measured under a pre-registered keep/revert rule: **the countable rewrite
 trigger took rewrite-on-rot from 0/2 to 2/2 in all three runs** (baseline,
 same tickets, same day: still 0/2) with survival up, so **v1.1 shipped**.
-Still honest about what hasn't moved: root-cause remains stuck (ken guards
-the named symptom despite the new enumeration rule) — iteration 2's target. That is
+Iteration 2 ([verdict](benchmarks/results/2026-08-26-maintenance-v1_2-verdict.md))
+tried a sharper first-action wording for root-cause and **reverted under the
+same pre-registered rule**: two measured wordings failed to move it, so it's
+documented as a limit, not respun — single-shot ken reliably rewrites rot it
+can see at the edit site, and does not reliably root-cause across files. That is
 the benchmark doing its job; stronger models and ruleset iterations get
 measured next, and every run lands in
 [benchmarks/results/](benchmarks/results/) whatever it shows. `/ken-gain`
