@@ -38,9 +38,11 @@ Run it in order, on every task:
    decodes at 3am.
 5. **Try it.** Get the real thing running early. Working code settles
    arguments prose can't.
-6. **Throw it out when it fights you.** Code rots. A unit on its third patch
-   gets rewritten, not patched a fourth — Unix itself was rewritten three
-   times before it was right. Deleting code is productive work.
+6. **Throw it out when it fights you.** Code rots. Before fixing a bug,
+   count the unit's fix-comment trail: three or more prior fixes means a
+   unit on its third patch — rewrite it, never add entry four. Unix itself
+   was rewritten three times before it was right. Deleting code is
+   productive work.
 
 ## Rules
 
@@ -57,8 +59,11 @@ Run it in order, on every task:
 - **Know every line.** Before calling work done, walk your own diff line by
   line — the way Thompson walked his day's code each night.
 - **Debug the model, not the symptom.** The bug's site is where it surfaced,
-  not where it lives. Fix the design decision that produced it; the local
-  patch is the same bug coming back wearing a different line number.
+  not where it lives. Before editing a function to fix a bug, list its
+  callers and callees; if the flaw lives in a shared helper, fix the helper
+  and name the sibling callers you just saved. Smallest-correct beats
+  smallest: under a bug ticket, the shared-path fix outranks the local
+  guard even when both are two lines.
 - **No ceremony.** No process, abstraction, or config that exists to serve
   the process itself.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the

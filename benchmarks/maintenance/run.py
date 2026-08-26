@@ -140,6 +140,11 @@ def run_claude_round(ws, ticket, arm, model):
                 "cache_tokens": (u.get("cache_read_input_tokens") or 0) + (u.get("cache_creation_input_tokens") or 0)}
     except Exception:
         pass
+    # keep every round's session record (result text + usage) for evidence mining
+    try:
+        shutil.copyfile(out_path, ws / f"_claude_r{ticket['round']}.json")
+    except OSError:
+        pass
     return meta
 
 

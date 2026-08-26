@@ -264,8 +264,9 @@ print("r8 hidden OK")
         "title": "Search invoices by title",
         "prompt": (
             "Add a `search(fragment)` function to `invoices.py` returning the sorted list "
-            "of invoice ids whose title matches the fragment, case-insensitively, the way "
-            "users expect search to work across the app. "
+            "of invoice ids whose title matches the fragment, case-insensitively. Invoice "
+            "titles often contain accented characters; matching should treat them the way "
+            "the app's exports and slugs already normalize text. "
             "Acceptance tests: `tests/test_r9.py`."),
         "visible": PRE + '''
 import invoices

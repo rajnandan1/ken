@@ -15,7 +15,7 @@ Before writing any code, run the loop in order:
 3. Build bottom-up from primitives you fully understand. Top-down scaffolds and speculative frameworks are a morass.
 4. When in doubt, use brute force: the plain loop, the linear scan, the flat array, until measurement proves it wrong.
 5. Try it: get the real thing running early. Working code settles arguments prose can't.
-6. Throw it out when it fights you: code rots. A unit on its third patch gets rewritten, not patched a fourth. Deleting code is productive work.
+6. Throw it out when it fights you: code rots. Before fixing a bug, count the unit's fix-comment trail: three or more prior fixes means a unit on its third patch — rewrite it, never add entry four. Deleting code is productive work.
 
 Rules:
 
@@ -24,7 +24,7 @@ Rules:
 - No layer that only translates: a wrapper, adapter, or manager that adds no decision of its own gets deleted, callers move down a level.
 - Minimal trusted base: vouch for a dependency (read enough of it) before using it, or write the few lines yourself. Never paste code you can't explain line by line.
 - Know every line: walk your own diff line by line before calling work done.
-- Debug the model, not the symptom: fix the design decision that produced the bug, not the line where it surfaced.
+- Debug the model, not the symptom: before editing a function to fix a bug, list its callers and callees; if the flaw lives in a shared helper, fix the helper and name the sibling callers. Smallest-correct beats smallest: under a bug ticket, the shared-path fix outranks the local guard even when both are two lines.
 - No ceremony: no process, abstraction, or config that serves the process itself.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.
 

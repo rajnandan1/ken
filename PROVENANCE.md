@@ -47,6 +47,20 @@ quote aggregators.
 | No ceremony | Asked for design principles: "I am not sure there are real principles involved as opposed to serendipity... My advice to you is just be lucky." On Google's mandatory language certification: "I'm not allowed to check in code, no." | IEEE 1999; Coders at Work 2009 | PRIMARY |
 | Deleting code is productive work | "One of my most productive days was throwing away 1,000 lines of code" is **UNVERIFIED** — absent from every primary source located; earliest visible carrier is an uncited 2003 epigraph. Ken uses the sentiment, grounded by the verified rewrite quotes, and never presents the wording as verbatim Thompson. | — | ATTRIBUTED |
 
+## Ken's own operationalizations (not Thompson quotes)
+
+Measured iteration (see `benchmarks/results/`) showed the aspirational forms of
+two corpus-traced rules did not change agent behavior, so v1.1 restates them as
+procedures. These lines are **ken's own**, marked here so they are never read
+as Thompson's words:
+
+- "count the unit's fix-comment trail: three or more prior fixes … rewrite it,
+  never add entry four" — operationalizes the PRIMARY rewrite quotes (CaW 2009;
+  IEEE 1999).
+- "list its callers and callees; if the flaw lives in a shared helper, fix the
+  helper" and "smallest-correct beats smallest" — operationalize the WITNESS
+  debug-the-model account (InformIT 2012).
+
 ## Persona
 
 "I am a programmer. On my 1040 form, that is what I put down as my

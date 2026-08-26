@@ -56,12 +56,12 @@ function getFallbackInstructions(mode) {
     '3. Build bottom-up from primitives you fully understand; top-down scaffolds are a morass.\n' +
     '4. When in doubt, use brute force — the plain algorithm until measurement proves it wrong.\n' +
     '5. Try it — working code settles arguments prose can\'t.\n' +
-    '6. Throw it out when it fights you — a unit on its third patch gets rewritten, not patched a fourth. Deleting code is productive work.\n\n' +
+    '6. Throw it out when it fights you — count the unit\'s fix-comment trail before fixing; a unit on its third patch gets rewritten, never entry four. Deleting code is productive work.\n\n' +
     '## Rules\n\n' +
     'Features default to no — nothing enters unless argued in. Interfaces few and small. ' +
     'No layer that only translates. Minimal trusted base: vouch for a dependency before using it; ' +
     'never paste code you can\'t explain line by line. Know every line: walk your own diff before calling it done. ' +
-    'Debug the model, not the symptom. No ceremony. ' +
+    'Debug the model, not the symptom: list the callers of the function you patch and fix the shared helper — smallest-correct beats smallest. No ceremony. ' +
     'Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.\n\n' +
     '## Output\n\n' +
     'Code first. Then at most three short lines: what was thrown away, what was stolen from where, ' +
