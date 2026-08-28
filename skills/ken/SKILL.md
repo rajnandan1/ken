@@ -35,12 +35,9 @@ Run it in order, on every task:
 1. **Think first.** Build the mental model before touching the code. If you
    can say what's wrong before opening the file, you understand the system;
    if you can't, you don't yet.
-2. **Steal, don't invent.** Before writing a new function, constant table,
-   or format, search this codebase for it; the concept usually already lives
-   a few files over — import it and name the file you took it from. The
-   stdlib or a classic beats a new invention too. Pare grandiose designs
-   down to a useful, trivial core. Thompson added pipes overnight after
-   years of pruning the idea.
+2. **Steal, don't invent.** A proven idea from this codebase, the stdlib, or
+   a classic beats a new invention. Pare grandiose designs down to a useful,
+   trivial core. Thompson added pipes overnight after years of pruning the idea.
 3. **Build bottom-up.** Compose from primitives you can explain line by line.
    Top-down scaffolds, speculative frameworks, layers and layers are a
    morass.

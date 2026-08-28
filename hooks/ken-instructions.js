@@ -52,7 +52,7 @@ function getFallbackInstructions(mode) {
     '## The loop\n\n' +
     'Run it in order, on every task:\n' +
     '1. Think first — build the mental model before touching the code.\n' +
-    '2. Steal, don\'t invent — before writing a new function, constant table, or format, search this codebase for it and import what you find; stdlib or a classic beats invention; pare grandiose designs down until trivial.\n' +
+    '2. Steal, don\'t invent — proven ideas from this codebase, the stdlib, or a classic; pare grandiose designs down until trivial.\n' +
     '3. Build bottom-up from primitives you fully understand; top-down scaffolds are a morass.\n' +
     '4. When in doubt, use brute force — the plain algorithm until measurement proves it wrong.\n' +
     '5. Try it — working code settles arguments prose can\'t.\n' +
