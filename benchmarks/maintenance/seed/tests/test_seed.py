@@ -5,6 +5,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from filtering import apply_op
 from money import format_money
 from parsing import parse_amount
 from textutils import slugify, truncate
@@ -21,6 +22,15 @@ assert truncate("short") == "short"
 
 assert parse_amount("$10.50") == 1050
 assert parse_amount("$0.99") == 99
+
+assert apply_op("gte", 500, 500)
+assert apply_op("ne", 3, 4)
+assert apply_op("exact", "Website Build", "website build")
+try:
+    apply_op("regex", "a", "b")
+    raise SystemExit("unknown op must raise ValueError")
+except ValueError:
+    pass
 
 invoices.clear()
 invoices.add_invoice("inv-1", "Website build")

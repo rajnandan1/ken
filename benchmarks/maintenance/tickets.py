@@ -5,14 +5,16 @@ Each ticket: a realistic prompt (probe never named), a VISIBLE acceptance test
 reads), and a HIDDEN strengthened test (scorer-only, run from a temp dir so it
 never touches the persistent workspace). Rates, per the metric definition:
 
-  reuse      rounds 1,3,7 — hidden divergence probe passes at round time (r9 retired to reported)
+  reuse      rounds 1,3,7,9 — hidden divergence probe passes at round time
+             (r9-search retired 2026-08-26; r9-filter subtle-reuse added 2026-08-28)
   root-cause rounds 2,6     — hidden sibling-caller test passes at round time
   rewrite    rounds 4,8     — rot sentinels gone AND the round's visible tests pass
   survival   headline       — end-of-run: rounds 1..9 visible+hidden all pass
 
 Visible tests pin only happy-path behavior; the distinctive planted-helper
-behavior (grouping, transliteration) lives ONLY in hidden probes, so a
-reinvented helper can pass every visible test and still be caught.
+behavior (grouping, transliteration, the filter tables' quirky ops) lives
+ONLY in hidden probes, so a reinvented helper can pass every visible test
+and still be caught.
 """
 
 PRE = "import os, sys\nsys.path.insert(0, os.getcwd())\n"
@@ -260,29 +262,44 @@ print("r8 hidden OK")
 ''',
     },
     {
-        "round": 9, "id": "r9-search", "probe": None,  # retired from scored reuse 2026-08-26: 0/24 then 24/24 — verifies prompt-following, not method; hidden test still counts toward survival
-        "title": "Search invoices by title",
+        # r9-search retired 2026-08-26 (verified prompt-following, not method);
+        # replaced 2026-08-28 by this subtle-reuse probe after a field report of
+        # an agent re-declaring a sibling module's operator sets. Reinvention
+        # diverges twice: the quirky op names (ne, exact) and case-insensitive
+        # text matching live only in filtering.py's tables.
+        "round": 9, "id": "r9-filter-invoices", "probe": "reuse",
+        "title": "Filter invoices",
         "prompt": (
-            "Add a `search(fragment)` function to `invoices.py` returning the sorted list "
-            "of invoice ids whose title matches the fragment, case-insensitively. Invoice "
-            "titles often contain accented characters; matching should treat them the way "
-            "the app's exports and slugs already normalize text. "
-            "Acceptance tests: `tests/test_r9.py`."),
+            "Add a `filter_invoices(field, op, value)` function to `invoices.py`: field "
+            "is 'title' or 'total' (total in cents), and it returns the sorted list of "
+            "matching invoice ids. It must support exactly the comparison and text "
+            "operators the app's filters already support — no more, no fewer — and raise "
+            "ValueError for anything else. Acceptance tests: `tests/test_r9.py`."),
         "visible": PRE + '''
 import invoices
 invoices.clear()
 invoices.add_invoice("inv-1", "Website build")
+invoices.add_item("inv-1", "design", "$100.00", 2)
 invoices.add_invoice("inv-2", "Logo design")
-assert invoices.search("website") == ["inv-1"]
-assert invoices.search("DESIGN") == ["inv-2"]
-assert invoices.search("nothing") == []
+invoices.add_item("inv-2", "logo", "$50.00")
+assert invoices.filter_invoices("title", "contains", "design") == ["inv-2"]
+assert invoices.filter_invoices("total", "gt", 10000) == ["inv-1"]
+try:
+    invoices.filter_invoices("title", "regex", ".*")
+    raise SystemExit("unsupported op must raise ValueError")
+except ValueError:
+    pass
 print("r9 visible OK")
 ''',
         "hidden": PRE + '''
 import invoices
 invoices.clear()
-invoices.add_invoice("inv-7", "Caf\\u00e9 Ol\\u00e9 rebrand")
-assert invoices.search("cafe") == ["inv-7"], "search must be accent-insensitive like the project slugify"
+invoices.add_invoice("inv-1", "Website build")
+invoices.add_item("inv-1", "design", "$100.00")
+invoices.add_invoice("inv-2", "Logo design")
+invoices.add_item("inv-2", "logo", "$50.00")
+assert invoices.filter_invoices("title", "exact", "WEBSITE BUILD") == ["inv-1"], "the app's text ops include case-insensitive 'exact' (see the shared filter tables)"
+assert invoices.filter_invoices("total", "ne", 10000) == ["inv-2"], "the app's compare ops include 'ne'"
 print("r9 hidden OK")
 ''',
     },

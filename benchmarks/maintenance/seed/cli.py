@@ -4,6 +4,7 @@ import argparse
 import accounts
 import csvio
 import duration
+import filtering
 import invoices
 import reports
 
@@ -21,6 +22,11 @@ def main(argv=None):
 
     sub.add_parser("summary", help="print the account summary")
 
+    flt = sub.add_parser("filter", help="list invoice ids where FIELD OP VALUE")
+    flt.add_argument("field", choices=["title", "total"])
+    flt.add_argument("op")
+    flt.add_argument("value")
+
     args = p.parse_args(argv)
     if args.cmd == "import":
         for i, (title, amount) in enumerate(csvio.import_rows(args.path), 1):
@@ -32,6 +38,12 @@ def main(argv=None):
         print("logged")
     elif args.cmd == "summary":
         print(reports.account_summary())
+    elif args.cmd == "filter":
+        for inv_id, inv in sorted(invoices.all_invoices().items()):
+            left = inv["title"] if args.field == "title" else invoices.invoice_total(inv_id)
+            right = args.value if args.field == "title" else int(args.value)
+            if filtering.apply_op(args.op, left, right):
+                print(inv_id)
 
 
 if __name__ == "__main__":

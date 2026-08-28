@@ -174,9 +174,16 @@ def export_statement(path):
         _write(ws, "csvio.py", GOOD_CSVIO)
     elif rnd == 9:
         _append(ws, "invoices.py", '''
-def search(fragment):
-    frag = slugify(fragment)
-    return sorted(i for i, inv in _invoices.items() if frag in slugify(inv["title"]))
+from filtering import apply_op
+
+
+def filter_invoices(field, op, value):
+    out = []
+    for inv_id, inv in _invoices.items():
+        left = inv["title"] if field == "title" else invoice_total(inv_id)
+        if apply_op(op, left, value):
+            out.append(inv_id)
+    return sorted(out)
 ''')
     elif rnd == 10:
         _write(ws, "taxes.py", GOOD_TAXES)
@@ -385,10 +392,27 @@ def export_statement(path):
     elif rnd == 8:
         _write(ws, "csvio.py", BAD_CSVIO_PATCH4)
     elif rnd == 9:
+        # reinvented operator table: misses ne/lte/gte/exact, text ops case-folded
+        # by luck of str.lower on contains only — the classic re-declaration
         _append(ws, "invoices.py", '''
-def search(fragment):
-    frag = fragment.lower()
-    return sorted(i for i, inv in _invoices.items() if frag in inv["title"].lower())
+_OPS = {
+    "eq": lambda a, b: a == b,
+    "lt": lambda a, b: a < b,
+    "gt": lambda a, b: a > b,
+    "contains": lambda a, b: str(b).lower() in str(a).lower(),
+    "startswith": lambda a, b: str(a).lower().startswith(str(b).lower()),
+}
+
+
+def filter_invoices(field, op, value):
+    if op not in _OPS:
+        raise ValueError(f"unsupported op: {op}")
+    out = []
+    for inv_id, inv in _invoices.items():
+        left = inv["title"] if field == "title" else invoice_total(inv_id)
+        if _OPS[op](left, value):
+            out.append(inv_id)
+    return sorted(out)
 ''')
     elif rnd == 10:
         _write(ws, "taxes.py", BAD_TAXES_R10)
