@@ -1,6 +1,6 @@
 {
   "name": "ken-mcp",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "MCP server that serves Ken's Thompson-mode instructions as a prompt and a tool.",
   "private": true,
   "type": "module",

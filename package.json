@@ -1,6 +1,6 @@
 {
   "name": "@rajnandan1/ken",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Thompson-mode systems discipline for AI agents. Try it, and if it doesn't work, throw it out and do it again.",
   "keywords": [
     "opencode-plugin",
