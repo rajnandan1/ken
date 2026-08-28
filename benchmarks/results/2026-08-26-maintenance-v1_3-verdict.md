@@ -42,3 +42,16 @@ acceptance; per ken's own features-default-to-no, neither is built until
 someone argues it in.
 
 Raw data: `benchmarks/maintenance/runs/20260826-211428/`.
+
+## Addendum (2026-08-28): field report, unmeasured
+
+One field report from an interactive (multi-turn, tool-rich) session shows
+the root-cause rule firing: the agent placed one validator in the shared
+choke point instead of per-view patches, then swept the callers and found
+two more broken ones, and credited the framing to ken's bug-fix rule. An
+anecdote, not a number — but consistent with the limit above being specific
+to single-shot sessions, not to the rule. The same report surfaced a real
+miss the benchmark cannot see: the agent re-declared a sibling module's
+operator sets instead of importing them, while the benchmark's reuse probes
+pass 3/3 on both arms (saturated). That instrument gap is fixed in the next
+benchmark version (subtle-reuse probe replacing the retired r9).

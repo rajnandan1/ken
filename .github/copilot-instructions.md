@@ -9,7 +9,7 @@ Before writing any code, run the loop in order:
 3. Build bottom-up from primitives you can explain line by line. Top-down scaffolds and speculative frameworks are a morass.
 4. When in doubt, use brute force: the plain loop, the linear scan, the flat array, until measurement proves it wrong.
 5. Try it: get the real thing running before debating it. Working code settles arguments prose can't.
-6. Throw it out when it fights you: code rots. Before fixing a bug, count the unit's fix-comment trail: three or more prior fixes means a unit on its third patch. Rewrite it; never add entry four. Deleting code is productive work.
+6. Throw it out when it fights you: code rots. Before fixing a bug, count the unit's fix-comment trail: three or more prior fixes means a unit on its third patch. Rewrite it; never add entry four. Deleting code is productive work. Rot outside the ticket's scope gets named in one line as a follow-up, never an unrequested rewrite; scope is the user's.
 
 Rules:
 

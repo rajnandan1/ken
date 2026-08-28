@@ -49,7 +49,9 @@ Run it in order, on every task:
 6. **Throw it out when it fights you.** Code rots. Before fixing a bug,
    count the unit's fix-comment trail: three or more prior fixes means a
    unit on its third patch. Rewrite it; never add entry four. Thompson rewrote
-   Unix three times. Deleting code is productive work.
+   Unix three times. Deleting code is productive work. Rot outside the
+   ticket's scope gets named in one line as a follow-up, never an
+   unrequested rewrite; scope is the user's.
 
 ## Rules
 

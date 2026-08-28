@@ -63,6 +63,10 @@ as Thompson's words:
   first-action, and tool-literal, all measured as non-firing and were
   reverted; the shipped wording keeps the honest aspiration, and the limit
   is documented in benchmarks/results/.)
+- "rot outside the ticket's scope gets named in one line as a follow-up,
+  never an unrequested rewrite" is a scope-precedence clause ken adds to the
+  rewrite rule (field-report driven, 2026-08-28); no Thompson source claims
+  it, and the benchmark does not measure it.
 
 ## Persona
 

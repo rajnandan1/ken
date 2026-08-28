@@ -93,7 +93,10 @@ Neither arm broke more than the other: survival tied at 8/9.
 
 The same runs catch ken failing a different rule. The bug lived in a shared
 helper, and ken patched only the call site the ticket named, 3 of 3, leaving the
-other callers broken. Every round, wins and misses, sits in
+other callers broken. One unmeasured field report from an interactive session
+shows that rule firing there — one fix in the shared helper, then a sweep that
+caught two more broken callers — consistent with the miss being specific to
+single-shot sessions. Every round, wins and misses, sits in
 [benchmarks/results/](benchmarks/results/).
 
 ## Install
