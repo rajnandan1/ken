@@ -39,7 +39,8 @@ Five behaviors: **rewrite** a thrice-patched unit instead of adding patch four,
 cause** instead of the named symptom, **vouch** for every dependency, and leave
 a **runnable check** behind. The behavior gates and agentic quality tier in
 [benchmarks/](benchmarks/) score them; a maintenance-over-time benchmark scores
-what survives a sequence of tickets.
+what survives a sequence of tickets, plus rewrite, reuse, root cause, and the
+trusted base (no unvouched import enters a stdlib-only project).
 
 ### The rewrite rule, measured
 

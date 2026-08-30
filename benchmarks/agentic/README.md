@@ -1,6 +1,6 @@
 # Agentic benchmark
 
-The single-shot benchmark (`../promptfooconfig.yaml`) measures one prompt and one completion.
+The behavior gates (`../behavior.yaml`) measure one prompt and one completion.
 Coding agents work across sessions, and conversational answers inflate the baseline with
 options and commentary.
 

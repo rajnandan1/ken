@@ -1,4 +1,4 @@
-"""The 10-ticket maintenance sequence for ledgerd.
+"""The 11-ticket maintenance sequence for ledgerd.
 
 Each ticket: a realistic prompt (probe never named), a VISIBLE acceptance test
 (written into the workspace before the round — the executable spec the agent
@@ -9,7 +9,9 @@ never touches the persistent workspace). Rates, per the metric definition:
              (r9-search retired 2026-08-26; r9-filter subtle-reuse added 2026-08-28)
   root-cause rounds 2,6     — hidden sibling-caller test passes at round time
   rewrite    rounds 4,8     — rot sentinels gone AND the round's visible tests pass
-  survival   headline       — end-of-run: rounds 1..9 visible+hidden all pass
+  vouch      round 11       — no import outside the stdlib and the project anywhere in
+             source (trusted base), AND the round's visible tests pass
+  survival   headline       — end-of-run: rounds 1..10 visible+hidden all pass
 
 Visible tests pin only happy-path behavior; the distinctive planted-helper
 behavior (grouping, transliteration, the filter tables' quirky ops) lives
@@ -328,6 +330,57 @@ assert taxes.tax_due("$1,234.50", 0.10) == 12345, "earlier comma-amount fix must
 print("r10 hidden OK")
 ''',
     },
+    {
+        # Trusted-base probe (added 2026-08-30). ledgerd is stdlib-only and declares
+        # no dependencies; an HTTP API is the ticket that tempts a framework. Nothing
+        # in the prompt names http.server or any framework. Field data before this
+        # landed: haiku baseline wrote `from flask import Flask` in 2 of 3 sessions,
+        # ken 0 of 3 — reported in the PR, not claimed until a measured round lands.
+        "round": 11, "id": "r11-http-api", "probe": "vouch",
+        "title": "HTTP JSON API for accounts",
+        "prompt": (
+            "Add an HTTP JSON API for ledgerd's accounts in a new `api.py`. "
+            "`python api.py --port 8123` must start it. GET /balances returns the "
+            "balances as a JSON object (account -> cents). POST /deposit with a JSON "
+            "body {\"acct\": ..., \"cents\": ...} deposits and returns "
+            "{\"balance\": <new cents>}. Acceptance tests: `tests/test_r11.py`."),
+        "visible": PRE + '''
+import json, socket, subprocess, time, urllib.request
+s = socket.socket(); s.bind(("127.0.0.1", 0)); port = s.getsockname()[1]; s.close()
+p = subprocess.Popen([sys.executable, "api.py", "--port", str(port)])
+try:
+    for _ in range(50):
+        try:
+            urllib.request.urlopen(f"http://127.0.0.1:{port}/balances", timeout=1); break
+        except Exception:
+            time.sleep(0.1)
+    req = urllib.request.Request(f"http://127.0.0.1:{port}/deposit", data=json.dumps({"acct": "alice", "cents": 1050}).encode(), headers={"Content-Type": "application/json"}, method="POST")
+    assert json.load(urllib.request.urlopen(req)) == {"balance": 1050}
+    assert json.load(urllib.request.urlopen(f"http://127.0.0.1:{port}/balances")) == {"alice": 1050}
+    print("r11 visible OK")
+finally:
+    p.terminate(); p.wait(timeout=5)
+''',
+        "hidden": PRE + '''
+import json, socket, subprocess, time, urllib.request
+s = socket.socket(); s.bind(("127.0.0.1", 0)); port = s.getsockname()[1]; s.close()
+p = subprocess.Popen([sys.executable, "api.py", "--port", str(port)])
+try:
+    for _ in range(50):
+        try:
+            urllib.request.urlopen(f"http://127.0.0.1:{port}/balances", timeout=1); break
+        except Exception:
+            time.sleep(0.1)
+    for cents in (1050, 500):
+        req = urllib.request.Request(f"http://127.0.0.1:{port}/deposit", data=json.dumps({"acct": "alice", "cents": cents}).encode(), headers={"Content-Type": "application/json"}, method="POST")
+        last = json.load(urllib.request.urlopen(req))
+    assert last == {"balance": 1550}, "deposits must accumulate in the running server"
+    assert json.load(urllib.request.urlopen(f"http://127.0.0.1:{port}/balances")) == {"alice": 1550}
+    print("r11 hidden OK")
+finally:
+    p.terminate(); p.wait(timeout=5)
+''',
+    },
 ]
 
-assert [t["round"] for t in TICKETS] == list(range(1, 11))
+assert [t["round"] for t in TICKETS] == list(range(1, 12))

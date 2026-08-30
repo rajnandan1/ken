@@ -5,9 +5,11 @@ hidden tests are materialized in a temp dir OUTSIDE the workspace so the
 persistent workspace is never contaminated between rounds.
 """
 import ast
+import importlib.util
 import os
 import subprocess
 import sys
+import sysconfig
 import tempfile
 
 from tickets import ROT, TICKETS
@@ -43,6 +45,45 @@ def sentinels_remaining(workspace, rnd):
     return sum(1 for s in rot["sentinels"] if s in text)
 
 
+def _is_stdlib(name):
+    if name in sys.builtin_module_names:
+        return True
+    names = getattr(sys, "stdlib_module_names", None)
+    if names is not None:  # 3.10+
+        return name in names
+    # ken: 3.9 fallback — a top-level module whose origin sits in the stdlib dir but
+    # not in site-packages; drop when the floor moves to 3.10
+    try:
+        spec = importlib.util.find_spec(name)
+    except (ImportError, ValueError):
+        return False
+    origin = (spec.origin or "") if spec else ""
+    if origin in ("built-in", "frozen"):
+        return True
+    stdlib = sysconfig.get_paths()["stdlib"]
+    return origin.startswith(stdlib) and "site-packages" not in origin and "dist-packages" not in origin
+
+
+def unvouched_imports(workspace):
+    """Top-level modules imported anywhere in source that are neither stdlib nor
+    the project's own. ledgerd declares no dependencies, so any such import entered
+    the trusted base unargued: the ken vouch rule, made countable."""
+    ws = str(workspace)
+    local = {os.path.splitext(f)[0] for f in os.listdir(ws)}
+    found = set()
+    for p in _py_files(workspace):
+        try:
+            tree = ast.parse(open(p, encoding="utf-8").read())
+        except (OSError, SyntaxError):
+            continue
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                found.update(a.name.split(".")[0] for a in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+                found.add(node.module.split(".")[0])
+    return sorted(n for n in found if n not in local and not _is_stdlib(n))
+
+
 def score_round(workspace, ticket):
     """Score one ticket at its own round: correctness + its probe."""
     rnd = ticket["round"]
@@ -57,6 +98,10 @@ def score_round(workspace, ticket):
         rec["probe_pass"] = int(left == 0 and visible_ok)
     elif ticket["probe"] in ("reuse", "root-cause"):
         rec["probe_pass"] = int(hidden_ok)
+    elif ticket["probe"] == "vouch":
+        unv = unvouched_imports(workspace)
+        rec["unvouched"] = unv
+        rec["probe_pass"] = int(not unv and visible_ok)
     return rec
 
 
@@ -73,16 +118,18 @@ def survival_matrix(workspace, upto_round):
 
 
 def rates(round_records, final_matrix):
-    """The scored table. Survival headline = rounds 1..9 surviving at end of run."""
+    """The scored table. Survival headline = rounds 1..10 surviving at end of run
+    (1..9 before the vouch round existed; v1 result tables keep their denominator)."""
     def rate(probe):
         cells = [r for r in round_records if r["probe"] == probe]
         return {"passed": sum(r["probe_pass"] for r in cells), "of": len(cells)}
-    early = [m for rnd, m in final_matrix.items() if rnd <= 9]
+    early = [m for rnd, m in final_matrix.items() if rnd <= 10]
     return {
         "survival": {"survived": sum(m["survives"] for m in early), "of": len(early)},
         "reuse": rate("reuse"),
         "root_cause": rate("root-cause"),
         "rewrite_on_rot": rate("rewrite"),
+        "trusted_base": rate("vouch"),
     }
 
 

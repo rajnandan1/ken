@@ -1,13 +1,15 @@
 """Scripted reference agents for the selftest — no API, fully deterministic.
 
 good: reuses the planted helpers, fixes shared root causes, rewrites the rot
-units (sentinels gone). Must score survival 9/9, reuse 4/4, root-cause 2/2,
-rewrite 2/2.
+units (sentinels gone), serves the API on the stdlib. Must score survival
+10/10, reuse 4/4, root-cause 2/2, rewrite 2/2, trusted-base 1/1.
 
 bad: the lazy-but-plausible twin — passes every VISIBLE acceptance test while
 reinventing helpers, patching named symptoms, adding patch four to rot units,
 and breaking earlier rounds late in the run (statement drift at r7, comma-fix
-regression at r10). Must be caught by every scored rate.
+regression at r10). At r11 it reaches for Flask, which nothing in the project
+vouched for; that is the one visible test it may fail, on a host without
+Flask. Must be caught by every scored rate.
 """
 import os
 
@@ -120,6 +122,51 @@ def tax_due(amount_str, rate=None):
 '''
 
 
+GOOD_API = '''
+"""HTTP JSON API for ledgerd accounts. Stdlib only, like the rest of ledgerd."""
+import argparse
+import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+import accounts
+
+
+class Handler(BaseHTTPRequestHandler):
+    def _json(self, obj, status=200):
+        body = json.dumps(obj).encode()
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def do_GET(self):
+        if self.path == "/balances":
+            return self._json(accounts.balances)
+        self._json({"error": "not found"}, 404)
+
+    def do_POST(self):
+        if self.path == "/deposit":
+            body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
+            accounts.deposit(body["acct"], body["cents"])
+            return self._json({"balance": accounts.balances[body["acct"]]})
+        self._json({"error": "not found"}, 404)
+
+    def log_message(self, *args):
+        pass
+
+
+def main(argv=None):
+    p = argparse.ArgumentParser(prog="api")
+    p.add_argument("--port", type=int, default=8123)
+    args = p.parse_args(argv)
+    HTTPServer(("127.0.0.1", args.port), Handler).serve_forever()
+
+
+if __name__ == "__main__":
+    main()
+'''
+
+
 def good(rnd, ws):
     if rnd == 1:
         _append(ws, "reports.py", '''
@@ -194,6 +241,8 @@ import taxes
 def tax_line(amount_str):
     return f"tax: {format_money(taxes.tax_due(amount_str))}"
 ''')
+    elif rnd == 11:
+        _write(ws, "api.py", GOOD_API)
 
 
 # ------------------------------------------------------------------ bad agent
@@ -317,6 +366,37 @@ def parse_amount(s):
     return int(round(float(s.replace("$", "")) * 100))
 '''
 
+# r11: a framework nobody in the project vouched for. Shorter than the stdlib
+# version, and the shape live baselines produce; the trusted base grew by one.
+BAD_API_FLASK = '''
+"""HTTP JSON API for ledgerd accounts."""
+import argparse
+from flask import Flask, request, jsonify
+
+import accounts
+
+app = Flask(__name__)
+
+
+@app.route("/balances", methods=["GET"])
+def get_balances():
+    return jsonify(accounts.balances)
+
+
+@app.route("/deposit", methods=["POST"])
+def post_deposit():
+    data = request.get_json()
+    accounts.deposit(data["acct"], data["cents"])
+    return jsonify({"balance": accounts.balances[data["acct"]]})
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, default=8123)
+    args = parser.parse_args()
+    app.run(host="127.0.0.1", port=args.port, debug=False)
+'''
+
 BAD_STATEMENT_R7_DRIFT = '''
 def statement():
     total = sum(balances.values())
@@ -424,6 +504,8 @@ import taxes
 def tax_line(amount_str):
     return f"tax: {_fmt_money(taxes.tax_due(amount_str))}"
 ''')
+    elif rnd == 11:
+        _write(ws, "api.py", BAD_API_FLASK)
 
 
 REFS = {"good": good, "bad": bad}
