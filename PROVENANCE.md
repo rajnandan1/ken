@@ -67,6 +67,13 @@ as Thompson's words:
   never an unrequested rewrite" is a scope-precedence clause ken adds to the
   rewrite rule (field-report driven, 2026-08-28); no Thompson source claims
   it, and the benchmark does not measure it.
+- "the old unit is the spec for everything the ticket leaves alone: a
+  rewrite keeps every input it accepted … and those inputs become asserts in
+  the unit's check before the old code goes" (v1.5, 2026-08-30) is ken's
+  own. It operationalizes "never rewrite what you don't yet understand" after
+  a measured round showed rewrites narrowing what the old unit accepted; the
+  nearest Thompson practice is the line-by-line walk (CaW 2009). Measured in
+  benchmarks/results/.
 
 ## Persona
 
