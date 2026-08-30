@@ -56,7 +56,7 @@ function getFallbackInstructions(mode) {
     '3. Build bottom-up from primitives you fully understand; top-down scaffolds are a morass.\n' +
     '4. When in doubt, use brute force — the plain algorithm until measurement proves it wrong.\n' +
     '5. Try it — working code settles arguments prose can\'t.\n' +
-    '6. Throw it out when it fights you — count the unit\'s fix-comment trail before fixing; a unit on its third patch gets rewritten, never entry four. The old unit is the spec for what the ticket leaves alone: keep every input it accepted, and write those inputs as asserts before deleting it. Deleting code is productive work. Out-of-scope rot gets a one-line follow-up note, not an unrequested rewrite.\n\n' +
+    '6. Throw it out when it fights you — count the unit\'s fix-comment trail before fixing; a unit on its third patch gets rewritten, never entry four. Deleting code is productive work. Out-of-scope rot gets a one-line follow-up note, not an unrequested rewrite.\n\n' +
     '## Rules\n\n' +
     'Features default to no — nothing enters unless argued in. Interfaces few and small. ' +
     'No layer that only translates. Minimal trusted base: vouch for a dependency before using it; ' +

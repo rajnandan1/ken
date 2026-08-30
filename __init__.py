@@ -97,7 +97,7 @@ def _fallback_instructions(mode: str) -> str:
         "Run the loop in order: think first; steal proven ideas rather than "
         "invent; build bottom-up from primitives you fully understand; when in "
         "doubt use brute force until measurement objects; try it; and throw it "
-        "out when it fights you — a unit on its third patch gets rewritten, keeping every input it accepted. "
+        "out when it fights you — a unit on its third patch gets rewritten. "
         "Features default to no. Interfaces few and small. No layer that only "
         "translates. List the callers of the function you patch and fix the "
         "shared helper. Never paste code you can't explain line by line. Do not "
