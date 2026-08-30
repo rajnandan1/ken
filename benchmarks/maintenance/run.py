@@ -5,12 +5,12 @@ workspace; the headline is what survives.
   python run.py --selftest
       Push the scripted good/bad reference agents through the full pipeline —
       no API, no spend. Good must score perfectly; the lazy twin (which passes
-      every VISIBLE test) must be caught by every scored rate. Doubles as the
-      end-to-end dry run. Run first, always.
+      every VISIBLE test, bar the dependency it can't vouch for) must be caught
+      by every scored rate. Doubles as the end-to-end dry run. Run first, always.
 
   python run.py --run --arms baseline,ken --repeats 3 --model haiku
       Live run (spends API; approve the cost gate first). One run = one
-      (arm, repeat): seed once, then 10 fresh headless Claude Code sessions in
+      (arm, repeat): seed once, then 11 fresh headless Claude Code sessions in
       the same workspace, git commit per round.
 
   python run.py --rescore runs/<stamp>
@@ -161,7 +161,7 @@ def play_run(ws, apply_round, label):
         rec["churn"] = churn(ws)
         rec["reported"] = reported(ws)
         records.append(rec)
-    final = survival_matrix(ws, 10)
+    final = survival_matrix(ws, 11)
     return {"rounds": records, "final_matrix": final, "rates": rates(records, final)}
 
 
@@ -180,7 +180,8 @@ def selftest():
         print(f"{name:5} survival {r['survival']['survived']}/{r['survival']['of']}  "
               f"reuse {r['reuse']['passed']}/{r['reuse']['of']}  "
               f"root-cause {r['root_cause']['passed']}/{r['root_cause']['of']}  "
-              f"rewrite {r['rewrite_on_rot']['passed']}/{r['rewrite_on_rot']['of']}")
+              f"rewrite {r['rewrite_on_rot']['passed']}/{r['rewrite_on_rot']['of']}  "
+              f"trusted-base {r['trusted_base']['passed']}/{r['trusted_base']['of']}")
 
     g, b = results["good"]["rates"], results["bad"]["rates"]
     def need(cond, msg):
@@ -190,15 +191,22 @@ def selftest():
         else:
             print("ok", msg)
 
-    need(g["survival"]["survived"] == 9, "good ref survives 9/9")
+    need(g["survival"]["survived"] == 10, "good ref survives 10/10")
     need(g["reuse"]["passed"] == 4, "good ref reuse 4/4")
     need(g["root_cause"]["passed"] == 2, "good ref root-cause 2/2")
     need(g["rewrite_on_rot"]["passed"] == 2, "good ref rewrite 2/2")
-    bad_visible = all(rec["visible"] == 1 for rec in results["bad"]["rounds"])
+    need(g["trusted_base"]["passed"] == 1, "good ref trusted-base 1/1")
+    # The vouch round is the one place the lazy twin's shortcut can show at round
+    # time: its framework import fails on any host that never installed it. Every
+    # other trap stays invisible.
+    bad_visible = all(rec["visible"] == 1 for rec in results["bad"]["rounds"] if rec["probe"] != "vouch")
     need(bad_visible, "bad ref passes every VISIBLE test at round time (the traps are invisible)")
     need(b["reuse"]["passed"] == 0, "bad ref caught on reuse (0/4)")
     need(b["root_cause"]["passed"] == 0, "bad ref caught on root-cause (0/2)")
     need(b["rewrite_on_rot"]["passed"] == 0, "bad ref caught on rewrite (0/2)")
+    unvouched = [n for rec in results["bad"]["rounds"] if rec["probe"] == "vouch" for n in rec.get("unvouched", [])]
+    need(b["trusted_base"]["passed"] == 0 and unvouched,
+         f"bad ref caught on trusted-base (0/1): unvouched {unvouched}")
     need(b["survival"]["survived"] < g["survival"]["survived"], "bad ref loses survival by end of run")
     print(f"\nselftest: {'all instruments valid' if not failures else str(len(failures)) + ' BROKEN'}")
     return len(failures)
@@ -219,7 +227,7 @@ def live(args):
         res = play_run(ws, lambda t: run_claude_round(ws, t, arm, args.model), arm)
         return {"arm": arm, "repeat": rep, **res}
 
-    print(f"running {len(specs)} runs x 10 rounds, {args.workers} at a time", flush=True)
+    print(f"running {len(specs)} runs x {len(TICKETS)} rounds, {args.workers} at a time", flush=True)
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as ex:
         futs = {ex.submit(one, s): s for s in specs}
@@ -242,8 +250,8 @@ def rescore(run_dir):
     if not run_dir.exists():
         run_dir = RUNS_DIR / run_dir.name
     for ws in sorted(p for p in run_dir.iterdir() if p.is_dir()):
-        final = survival_matrix(ws, 10)
-        early = [m for rnd, m in final.items() if rnd <= 9]
+        final = survival_matrix(ws, 11)
+        early = [m for rnd, m in final.items() if rnd <= 10]
         print(f"{ws.name:20} end-state survival {sum(m['survives'] for m in early)}/{len(early)}  "
               f"reported {reported(ws)}")
 
