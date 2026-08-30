@@ -67,6 +67,12 @@ as Thompson's words:
   never an unrequested rewrite" is a scope-precedence clause ken adds to the
   rewrite rule (field-report driven, 2026-08-28); no Thompson source claims
   it, and the benchmark does not measure it.
+- A fourth form, "the old unit is the spec for everything the ticket leaves
+  alone: a rewrite keeps every input it accepted … and those inputs become
+  asserts in the unit's check before the old code goes" (v1.5 candidate,
+  2026-08-30), was measured and **reverted**: where a rewrite happened it lost
+  no case, but the rewrite trigger fired less often. Not shipped; the record
+  is in benchmarks/results/.
 
 ## Persona
 
