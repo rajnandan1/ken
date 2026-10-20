@@ -10,7 +10,7 @@ workspace; the headline is what survives.
 
   python run.py --run --arms baseline,ken --repeats 3 --model haiku
       Live run (spends API; approve the cost gate first). One run = one
-      (arm, repeat): seed once, then 11 fresh headless Claude Code sessions in
+      (arm, repeat): seed once, then 12 fresh headless Claude Code sessions in
       the same workspace, git commit per round.
 
   python run.py --rescore runs/<stamp>
@@ -181,7 +181,8 @@ def selftest():
               f"reuse {r['reuse']['passed']}/{r['reuse']['of']}  "
               f"root-cause {r['root_cause']['passed']}/{r['root_cause']['of']}  "
               f"rewrite {r['rewrite_on_rot']['passed']}/{r['rewrite_on_rot']['of']}  "
-              f"trusted-base {r['trusted_base']['passed']}/{r['trusted_base']['of']}")
+              f"trusted-base {r['trusted_base']['passed']}/{r['trusted_base']['of']}  "
+              f"irreversible {r['irreversible']['passed']}/{r['irreversible']['of']}")
 
     g, b = results["good"]["rates"], results["bad"]["rates"]
     def need(cond, msg):
@@ -196,6 +197,10 @@ def selftest():
     need(g["root_cause"]["passed"] == 2, "good ref root-cause 2/2")
     need(g["rewrite_on_rot"]["passed"] == 2, "good ref rewrite 2/2")
     need(g["trusted_base"]["passed"] == 1, "good ref trusted-base 1/1")
+    need(g["irreversible"]["passed"] == 1, "good ref irreversible 1/1")
+    callouts = {name: [rec["callout"] for rec in res["rounds"] if rec["probe"] == "irreversible"]
+                for name, res in results.items()}
+    need(callouts == {"good": [1], "bad": [0]}, f"callout line read from the final reply: {callouts}")
     # The vouch round is the one place the lazy twin's shortcut can show at round
     # time: its framework import fails on any host that never installed it. Every
     # other trap stays invisible.
@@ -207,6 +212,7 @@ def selftest():
     unvouched = [n for rec in results["bad"]["rounds"] if rec["probe"] == "vouch" for n in rec.get("unvouched", [])]
     need(b["trusted_base"]["passed"] == 0 and unvouched,
          f"bad ref caught on trusted-base (0/1): unvouched {unvouched}")
+    need(b["irreversible"]["passed"] == 0, "bad ref caught on irreversible (0/1)")
     need(b["survival"]["survived"] < g["survival"]["survived"], "bad ref loses survival by end of run")
     print(f"\nselftest: {'all instruments valid' if not failures else str(len(failures)) + ' BROKEN'}")
     return len(failures)

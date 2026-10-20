@@ -39,19 +39,23 @@ code against adversarial input. Every instrument proves itself with
 
 ### Maintenance-over-time (`maintenance/`)
 
-A sequence of 11 realistic tickets against ONE persistent codebase (`ledgerd`):
+A sequence of 12 realistic tickets against ONE persistent codebase (`ledgerd`):
 the agent's output is the substrate for every later round, a git commit lands
 per round. **Survival** records the end-of-run pass rate of all
 earlier tickets' tests (visible + hidden). Scored deterministic rates: reuse
 (planted-helper divergence probes), root-cause (hidden sibling-caller tests),
 rewrite-on-rot (sentinel patch-trails), trusted-base (the HTTP API ticket:
-no import outside the stdlib and the project anywhere in source). Erosion/
+no import outside the stdlib and the project anywhere in source),
+irreversible (the CLI rename ticket: `track` works and the shipped `log` still
+works; the `ken: irreversible:` callout in the final reply is reported, not
+scored). Erosion/
 churn/clone-density/cost are reported as curves, never scored. No LLM judges
 anywhere.
 
 The trusted-base probe landed 2026-08-30 as round 11, so survival is now
 scored over rounds 1..10; the v1 result tables in [results/](results/) keep
-their rounds 1..9 denominator.
+their rounds 1..9 denominator. The irreversible probe landed 2026-10-20 as round
+12 and leaves the survival denominator at 10.
 
 ```bash
 cd benchmarks/maintenance

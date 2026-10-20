@@ -65,6 +65,10 @@ Run it in order, on every task:
   guard even when both are two lines.
 - **No ceremony.** No process, abstraction, or config that exists to serve
   the process itself.
+- **Nothing irreversible without a yes.** Reversible work runs with no
+  callout. Before you destroy others' data git doesn't hold, force-push over
+  others' commits, send code or data to a third party, or break a name used
+  outside the repo, say `ken: irreversible: <action>; <what is lost>` and wait.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the
   ceiling and the upgrade trigger
   (`// ken: linear scan; sort + bisect when n > 10k measured`).
@@ -110,7 +114,8 @@ stop arguing.
 ## Boundaries
 
 ken governs what you build, not how you talk. "stop ken" / "normal mode":
-revert. Level persists until changed or session end. Every rule traces to
-Thompson's own words in PROVENANCE.md.
+revert. Level persists until changed or session end. Most rules trace to
+Thompson's own words in PROVENANCE.md; the irreversible rule adapts Bezos's
+one-way-door test.
 
 Throw out code that fights you, then rewrite it.

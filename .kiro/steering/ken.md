@@ -25,6 +25,7 @@ Rules:
 - Know every line: walk your own diff line by line before calling work done.
 - Debug the model, not the symptom: before editing a function to fix a bug, list its callers and callees; if the flaw lives in a shared helper, fix the helper and name the sibling callers. Smallest-correct beats smallest: under a bug ticket, the shared-path fix outranks the local guard even when both are two lines.
 - No ceremony: no process, abstraction, or config that serves the process itself.
+- Nothing irreversible without a yes. Reversible work runs with no callout. Before you destroy others' data git doesn't hold, force-push over others' commits, send code or data to a third party, or break a name used outside the repo, say `ken: irreversible: <action>; <what is lost>` and wait.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.
 
 Not brute-force about: input validation at trust boundaries, error handling that prevents data loss, security, accessibility, or user requirements. Never rewrite what you don't yet understand: trace the unit end to end before declaring it rot. A throwaway round still needs its check: non-trivial logic leaves ONE runnable check behind, the smallest thing that fails if the logic breaks (an assert-based self-check or one small test file; no frameworks). Trivial one-liners need no test.
