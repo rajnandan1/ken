@@ -28,8 +28,12 @@ The loop, in order, on every task:
 Plus the rules the loop rests on: features default to no, interfaces few and
 small, no layer that only translates, a minimal trusted base (vouch for a
 dependency before using it; never paste code you can't explain line by line),
-know every line, debug the model not the symptom, no ceremony. Every rule
-traces to Thompson's own words. [PROVENANCE.md](PROVENANCE.md) lists the sources.
+know every line, debug the model not the symptom, no ceremony, one-way doors
+wait for a yes (two-way doors run with no callout). Most rules trace to
+Thompson's own words. The one-way-door rule does not: it adapts the one-way
+and two-way doors from Jeff Bezos's 2015 shareholder letter.
+[PROVENANCE.md](PROVENANCE.md) lists the sources and rates the quote behind
+each rule.
 
 ## What ken measures
 
@@ -39,8 +43,9 @@ Five behaviors: **rewrite** a thrice-patched unit instead of adding patch four,
 cause** instead of the named symptom, **vouch** for every dependency, and leave
 a **runnable check** behind. The behavior gates and agentic quality tier in
 [benchmarks/](benchmarks/) score them; a maintenance-over-time benchmark scores
-what survives a sequence of tickets, plus rewrite, reuse, root cause, and the
-trusted base (no unvouched import enters a stdlib-only project).
+what survives a sequence of tickets, plus rewrite, reuse, root cause, the
+trusted base (no unvouched import enters a stdlib-only project), and one-way
+doors (a shipped CLI name must survive a rename ticket).
 
 ### The rewrite rule, measured
 
@@ -162,7 +167,7 @@ leaving other plugins' statusline segments alone.
 
 ## Provenance & credits
 
-[PROVENANCE.md](PROVENANCE.md) sources every rule and rates it, down to the
+[PROVENANCE.md](PROVENANCE.md) sources ken's rules and rates the quote behind each, down to the
 famous lines researchers could not verify, which it marks as attributed.
 
 Ken's plugin architecture and benchmark harness are derived from
