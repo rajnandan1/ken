@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const { getFallbackInstructions } = require('../hooks/ken-instructions');
 
 const root = path.join(__dirname, '..');
 
@@ -38,8 +39,9 @@ for (const [relPath, normalize] of copies) {
 
 // SKILL.md is the runtime source of truth and is longer than the compact body,
 // so it cannot be byte-compared. ken: canary, not full equality. Assert the
-// load-bearing rules survive verbatim in both the source and AGENTS.md. Changing
-// a rule's wording trips this, which is the reminder to propagate it everywhere.
+// load-bearing rules survive verbatim in the source, AGENTS.md, and the hook
+// fallback. Changing a rule's wording trips this, which is the reminder to
+// propagate it everywhere.
 // Upgrade path: generate the copies from SKILL.md if this ever misses a real drift.
 const INVARIANTS = [
   'use brute force',                 // the core maxim
@@ -59,7 +61,11 @@ const INVARIANTS = [
 ];
 
 const skill = read('skills/ken/SKILL.md');
-const sources = [['skills/ken/SKILL.md', skill], ['AGENTS.md', agents]];
+const sources = [
+  ['skills/ken/SKILL.md', skill],
+  ['AGENTS.md', agents],
+  ['hooks/ken-instructions.js fallback', getFallbackInstructions('full')],
+];
 for (const phrase of INVARIANTS) {
   for (const [label, text] of sources) {
     if (!text.includes(phrase)) {
@@ -74,4 +80,4 @@ if (failed) {
   process.exit(1);
 }
 
-console.log(`Rule copies match AGENTS.md; ${INVARIANTS.length} rule invariants present in SKILL.md and AGENTS.md.`);
+console.log(`Rule copies match AGENTS.md; ${INVARIANTS.length} rule invariants present in SKILL.md, AGENTS.md, and the hook fallback.`);
