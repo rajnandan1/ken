@@ -1,8 +1,8 @@
 # Provenance
 
 Every rule in ken's ruleset (`skills/ken/SKILL.md`) traces to something Ken
-Thompson said or did, except where this file says otherwise: "Nothing
-irreversible without a yes" adapts Jeff Bezos's one-way-door test, and the
+Thompson said or did, except where this file says otherwise: "One-way doors
+wait for a yes" adapts Jeff Bezos's one-way-door test, and the
 clauses under "Ken's own operationalizations" are ken's own. The `ken:`
 ceiling comment and the runnable check have no row yet. This file is the trace. Research was done
 against the sources themselves (fetched copies and scanned-book full-text
@@ -49,7 +49,7 @@ search), not quote aggregators.
 | Know every line                  | "[at] night I'd sit there and walk through it line by line and find bugs."                                                                                                                                                                                                                                     | Coders at Work 2009            | PRIMARY    |
 | Debug the model, not the symptom | Pike's conclusion from Thompson's practice: fixing the mental model "leads to better software" than diving on the symptom.                                                                                                                                                                                     | InformIT 2012                  | WITNESS    |
 | No ceremony                      | Asked for design principles: "I am not sure there are real principles involved as opposed to serendipity... My advice to you is just be lucky." On Google's mandatory language certification: "I'm not allowed to check in code, no."                                                                          | IEEE 1999; Coders at Work 2009 | PRIMARY    |
-| Nothing irreversible without a yes | **Not Thompson's.** Bezos: "Some decisions are consequential and irreversible or nearly irreversible – one-way doors – and these decisions must be made methodically, carefully, slowly, with great deliberation and consultation. … But most decisions aren't like that – they are changeable, reversible – they're two-way doors." No Thompson source searched states the rule. His nearest line limits "Try it" to work outside product development: "Try it, and if it doesn't work throw it out and do it again. You just can't do that in a product-development environment." "I'd spell creat with an e" shows what a shipped name costs, but Kernighan & Pike report it with no asker or date. | Bezos 2015 letter; IEEE 1999 pp. 59–60; K&P 1984 p. 204 | PRIMARY (Bezos); IEEE line PRIMARY; creat line ATTRIBUTED |
+| One-way doors wait for a yes | **Not Thompson's.** Bezos: "Some decisions are consequential and irreversible or nearly irreversible – one-way doors – and these decisions must be made methodically, carefully, slowly, with great deliberation and consultation. … But most decisions aren't like that – they are changeable, reversible – they're two-way doors." No Thompson source searched states the rule. His nearest line limits "Try it" to work outside product development: "Try it, and if it doesn't work throw it out and do it again. You just can't do that in a product-development environment." "I'd spell creat with an e" shows what a shipped name costs, but Kernighan & Pike report it with no asker or date. | Bezos 2015 letter; IEEE 1999 pp. 59–60; K&P 1984 p. 204 | PRIMARY (Bezos); IEEE line PRIMARY; creat line ATTRIBUTED |
 | Deleting code is productive work | "One of my most productive days was throwing away 1,000 lines of code" is **UNVERIFIED**. Researchers found no primary source; the earliest visible carrier is an uncited 2003 epigraph. Ken uses the sentiment, grounded by the verified rewrite quotes, and never presents the wording as verbatim Thompson. | None located                   | ATTRIBUTED |
 
 ## Ken's own operationalizations (not Thompson quotes)
@@ -79,12 +79,12 @@ own**, marked here so they are never read as Thompson's words:
   no case, but the rewrite trigger fired less often. Not shipped; the record
   is in benchmarks/results/.
 
-- "Nothing irreversible without a yes" is ken's wording of Bezos's
-  one-way/two-way door test (2015 letter, section "Invention Machine"). The
-  trigger list (destroy others' data git doesn't hold, force-push over others'
-  commits, send code or data to a third party, break a name used outside the
-  repo), the `ken: irreversible: <action>; <what is lost>` callout line, and
-  "reversible work runs with no callout" are ken's own. None of these Thompson
+- "One-way doors wait for a yes" is ken's wording of Bezos's one-way/two-way
+  door test (2015 letter, section "Invention Machine"). The door terms are
+  Bezos's. The trigger list (destroy others' data git doesn't hold,
+  force-push over others' commits, send code or data to a third party, break
+  a name used outside the repo), the `ken: irreversible: <action>; <what is
+  lost>` callout line, and "two-way doors run with no callout" are ken's own. None of these Thompson
   sources states the rule: Mahoney 1989, IEEE 1999, the Turing lecture, CACM
   1974 / BSTJ 1978, Dr. Dobb's 2011, and InformIT 2012, searched in full, and
   _Coders at Work_, searched only through archive.org's snippet index. Not

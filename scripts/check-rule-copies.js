@@ -47,8 +47,8 @@ const INVARIANTS = [
   'only translates',                 // no translate-only layers
   'explain line by line',            // minimal trusted base / vouching
   'runnable check',                  // throwaway rounds still need their check
-  'Nothing irreversible without a yes',
-  'Reversible work runs',            // the carve-out that keeps "Try it" callout-free
+  'One-way doors wait for a yes',
+  'Two-way doors run',               // the carve-out that keeps "Try it" callout-free
   // safety carve-outs: pin each so a reword in either file can't silently drop
   // one. Continuous substrings present in both files ("input validation at
   // trust" because "boundaries" wraps a line in SKILL.md).

@@ -62,7 +62,7 @@ function getFallbackInstructions(mode) {
     'No layer that only translates. Minimal trusted base: vouch for a dependency before using it; ' +
     'never paste code you can\'t explain line by line. Know every line: walk your own diff before calling it done. ' +
     'Debug the model, not the symptom: list the callers of the function you patch and fix the shared helper — smallest-correct beats smallest. No ceremony. ' +
-    'Nothing irreversible without a yes: reversible work runs with no callout; before you destroy others\' data git doesn\'t hold, ' +
+    'One-way doors wait for a yes: two-way doors run with no callout; before you destroy others\' data git doesn\'t hold, ' +
     'force-push over others\' commits, send code or data to a third party, or break a name used outside the repo, ' +
     'say `ken: irreversible: <action>; <what is lost>` and wait for the user\'s yes. ' +
     'Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.\n\n' +

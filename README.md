@@ -28,10 +28,10 @@ The loop, in order, on every task:
 Plus the rules the loop rests on: features default to no, interfaces few and
 small, no layer that only translates, a minimal trusted base (vouch for a
 dependency before using it; never paste code you can't explain line by line),
-know every line, debug the model not the symptom, no ceremony, nothing
-irreversible without a yes (reversible work runs with no callout). Most rules
-trace to Thompson's own words. The irreversible rule does not: it adapts Jeff
-Bezos's one-way-door test from his 2015 shareholder letter.
+know every line, debug the model not the symptom, no ceremony, one-way doors
+wait for a yes (two-way doors run with no callout). Most rules trace to
+Thompson's own words. The one-way-door rule does not: it adapts the one-way
+and two-way doors from Jeff Bezos's 2015 shareholder letter.
 [PROVENANCE.md](PROVENANCE.md) lists the sources and rates the quote behind
 each rule.
 
@@ -44,8 +44,8 @@ cause** instead of the named symptom, **vouch** for every dependency, and leave
 a **runnable check** behind. The behavior gates and agentic quality tier in
 [benchmarks/](benchmarks/) score them; a maintenance-over-time benchmark scores
 what survives a sequence of tickets, plus rewrite, reuse, root cause, the
-trusted base (no unvouched import enters a stdlib-only project), and
-irreversible actions (a shipped CLI name must survive a rename ticket).
+trusted base (no unvouched import enters a stdlib-only project), and one-way
+doors (a shipped CLI name must survive a rename ticket).
 
 ### The rewrite rule, measured
 
