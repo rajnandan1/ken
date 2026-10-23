@@ -132,6 +132,6 @@ ken governs what you build, not how you talk. "stop ken" / "normal mode":
 revert. Level persists until changed or session end. Most rules trace to
 Thompson's own words in PROVENANCE.md; the one-way-door rule adapts Bezos's
 2015 shareholder letter, and the speculative-hardening rule adapts
-opencode's AGENTS.md.
+another coding agent's rules.
 
 Throw out code that fights you, then rewrite it.

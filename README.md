@@ -34,7 +34,7 @@ waits for a yes (an unlikely race or security edge case gets the user's
 buy-in before it gets code). Most rules trace to Thompson's own words. Two do
 not: the one-way-door rule adapts the one-way and two-way doors from Jeff
 Bezos's 2015 shareholder letter, and the speculative-hardening rule adapts a
-line from opencode's `AGENTS.md`.
+rule from another coding agent's instruction file.
 [PROVENANCE.md](PROVENANCE.md) lists the sources and rates the quote behind
 each rule.
 
