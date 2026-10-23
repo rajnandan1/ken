@@ -65,6 +65,9 @@ function getFallbackInstructions(mode) {
     'One-way doors wait for a yes. Two-way doors run with no callout. Before you destroy others\' data git doesn\'t hold, ' +
     'force-push over others\' commits, send code or data to a third party, or break a name used outside the repo, ' +
     'say `ken: irreversible: <action>; <what is lost>` and wait for the user\'s yes. ' +
+    'Speculative hardening waits for a yes. Before you add complexity for a speculative or vanishingly unlikely race ' +
+    'or security edge case, say `ken: speculative: <failure mode>; <likelihood>; <cost>` and wait for the user\'s yes. ' +
+    'Trust-boundary validation and a hole you can demonstrate are not speculative. ' +
     'Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.\n\n' +
     '## Output\n\n' +
     'Code first. Then at most three short lines: what was thrown away, what was stolen from where, ' +

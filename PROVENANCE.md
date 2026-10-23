@@ -2,7 +2,8 @@
 
 Every rule in ken's ruleset (`skills/ken/SKILL.md`) traces to something Ken
 Thompson said or did, except where this file says otherwise: "One-way doors
-wait for a yes" adapts Jeff Bezos's one-way-door test, and the
+wait for a yes" adapts Jeff Bezos's one-way-door test, "Speculative hardening
+waits for a yes" adapts a rule from opencode's `AGENTS.md`, and the
 clauses under "Ken's own operationalizations" are ken's own. The `ken:`
 ceiling comment and the runnable check have no row yet. This file is the trace. Research was done
 against the sources themselves (fetched copies and scanned-book full-text
@@ -26,6 +27,7 @@ search), not quote aggregators.
 | Andrew Binstock, "Interview with Ken Thompson", Dr. Dobb's                  | 2011      |
 | Rob Pike, "The Best Programming Advice I Ever Got", InformIT                | 2012      |
 | Jeff Bezos, 2015 Letter to Shareholders (SEC Form 8-K Ex. 99.1, filed 2016-04-05) | 2016 |
+| opencode, [`AGENTS.md` line 48](https://github.com/anomalyco/opencode/blob/84578e123ffd31e31a174457e7350961da4fabbc/AGENTS.md#L48), `dev` branch at commit `84578e1` | 2026 |
 
 ## The loop
 
@@ -50,6 +52,7 @@ search), not quote aggregators.
 | Debug the model, not the symptom | Pike's conclusion from Thompson's practice: fixing the mental model "leads to better software" than diving on the symptom.                                                                                                                                                                                     | InformIT 2012                  | WITNESS    |
 | No ceremony                      | Asked for design principles: "I am not sure there are real principles involved as opposed to serendipity... My advice to you is just be lucky." On Google's mandatory language certification: "I'm not allowed to check in code, no."                                                                          | IEEE 1999; Coders at Work 2009 | PRIMARY    |
 | One-way doors wait for a yes | **Not Thompson's.** Bezos: "Some decisions are consequential and irreversible or nearly irreversible – one-way doors – and these decisions must be made methodically, carefully, slowly, with great deliberation and consultation. … But most decisions aren't like that – they are changeable, reversible – they're two-way doors." No Thompson source searched states the rule. His nearest line limits "Try it" to work outside product development: "Try it, and if it doesn't work throw it out and do it again. You just can't do that in a product-development environment." "I'd spell creat with an e" shows what a shipped name costs, but Kernighan & Pike report it with no asker or date. | Bezos 2015 letter; IEEE 1999 pp. 59–60; K&P 1984 p. 204 | PRIMARY (Bezos); IEEE line PRIMARY; creat line ATTRIBUTED |
+| Speculative hardening waits for a yes | **Not Thompson's.** opencode: "Before adding complexity for a speculative or vanishingly unlikely race or security edge case, explain the concrete failure mode, likelihood, and complexity cost to the user and get their buy-in. Do not silently expand scope for theoretical robustness." No Thompson source was searched for this rule. | opencode `AGENTS.md` (`84578e1`, line 48) | PRIMARY (opencode) |
 | Deleting code is productive work | "One of my most productive days was throwing away 1,000 lines of code" is **UNVERIFIED**. Researchers found no primary source; the earliest visible carrier is an uncited 2003 epigraph. Ken uses the sentiment, grounded by the verified rewrite quotes, and never presents the wording as verbatim Thompson. | None located                   | ATTRIBUTED |
 
 ## Ken's own operationalizations (not Thompson quotes)
@@ -89,6 +92,12 @@ own**, marked here so they are never read as Thompson's words:
   1974 / BSTJ 1978, Dr. Dobb's 2011, and InformIT 2012, searched in full, and
   _Coders at Work_, searched only through archive.org's snippet index. Not
   measured yet; maintenance round 12 (`r12-rename-log`) is its probe.
+- "Speculative hardening waits for a yes" is ken's wording of opencode's rule
+  (`AGENTS.md` line 48, commit `84578e1`). The leading phrase shared with the
+  one-way-door rule, the `ken: speculative: <failure mode>; <likelihood>;
+  <cost>` callout line, and the carve-out for trust-boundary validation and a
+  hole you can demonstrate are ken's own. Not measured yet; no maintenance
+  round probes it.
 
 ## Persona
 

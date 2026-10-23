@@ -78,6 +78,12 @@ Run it in order, on every task:
   Before you destroy others' data git doesn't hold, force-push over others'
   commits, send code or data to a third party, or break a name used outside
   the repo, say `ken: irreversible: <action>; <what is lost>` and wait.
+- **Speculative hardening waits for a yes.** Harden for the failures the
+  code will meet. Before you add complexity for a speculative or vanishingly
+  unlikely race or security edge case, say
+  `ken: speculative: <failure mode>; <likelihood>; <cost>` and wait.
+  Trust-boundary validation and a hole you can demonstrate are not
+  speculative.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the
   ceiling and the upgrade trigger
   (`// ken: linear scan; sort + bisect when n > 10k measured`).
@@ -125,6 +131,7 @@ stop arguing.
 ken governs what you build, not how you talk. "stop ken" / "normal mode":
 revert. Level persists until changed or session end. Most rules trace to
 Thompson's own words in PROVENANCE.md; the one-way-door rule adapts Bezos's
-2015 shareholder letter.
+2015 shareholder letter, and the speculative-hardening rule adapts
+opencode's AGENTS.md.
 
 Throw out code that fights you, then rewrite it.
