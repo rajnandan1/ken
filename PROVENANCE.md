@@ -2,7 +2,8 @@
 
 Every rule in ken's ruleset (`skills/ken/SKILL.md`) traces to something Ken
 Thompson said or did, except where this file says otherwise: "One-way doors
-wait for a yes" adapts Jeff Bezos's one-way-door test, and the
+wait for a yes" adapts Jeff Bezos's one-way-door test, "Speculative hardening
+waits for a yes" adapts a rule from another coding agent's instruction file, and the
 clauses under "Ken's own operationalizations" are ken's own. The `ken:`
 ceiling comment and the runnable check have no row yet. This file is the trace. Research was done
 against the sources themselves (fetched copies and scanned-book full-text
@@ -89,6 +90,13 @@ own**, marked here so they are never read as Thompson's words:
   1974 / BSTJ 1978, Dr. Dobb's 2011, and InformIT 2012, searched in full, and
   _Coders at Work_, searched only through archive.org's snippet index. Not
   measured yet; maintenance round 12 (`r12-rename-log`) is its probe.
+- "Speculative hardening waits for a yes" is ken's wording of a rule from
+  another coding agent's instruction file. No Thompson source was searched
+  for it, so it has no row in the rules table. The leading phrase shared with the
+  one-way-door rule, the `ken: speculative: <failure mode>; <likelihood>;
+  <cost>` callout line, and the carve-out for trust-boundary validation and a
+  hole you can demonstrate are ken's own. Not measured yet; no maintenance
+  round probes it.
 
 ## Persona
 

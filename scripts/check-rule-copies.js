@@ -51,6 +51,7 @@ const INVARIANTS = [
   'runnable check',                  // throwaway rounds still need their check
   'One-way doors wait for a yes',
   'Two-way doors run',               // the carve-out that keeps "Try it" callout-free
+  'Speculative hardening waits for a yes',
   // safety carve-outs: pin each so a reword in either file can't silently drop
   // one. Continuous substrings present in both files ("input validation at
   // trust" because "boundaries" wraps a line in SKILL.md).

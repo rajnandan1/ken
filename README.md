@@ -29,9 +29,12 @@ Plus the rules the loop rests on: features default to no, interfaces few and
 small, no layer that only translates, a minimal trusted base (vouch for a
 dependency before using it; never paste code you can't explain line by line),
 know every line, debug the model not the symptom, no ceremony, one-way doors
-wait for a yes (two-way doors run with no callout). Most rules trace to
-Thompson's own words. The one-way-door rule does not: it adapts the one-way
-and two-way doors from Jeff Bezos's 2015 shareholder letter.
+wait for a yes (two-way doors run with no callout), speculative hardening
+waits for a yes (an unlikely race or security edge case gets the user's
+buy-in before it gets code). Most rules trace to Thompson's own words. Two do
+not: the one-way-door rule adapts the one-way and two-way doors from Jeff
+Bezos's 2015 shareholder letter, and the speculative-hardening rule adapts a
+rule from another coding agent's instruction file.
 [PROVENANCE.md](PROVENANCE.md) lists the sources and rates the quote behind
 each rule.
 
