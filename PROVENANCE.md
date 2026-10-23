@@ -94,7 +94,7 @@ own**, marked here so they are never read as Thompson's words:
   another coding agent's instruction file. No Thompson source was searched
   for it, so it has no row in the rules table. The leading phrase shared with the
   one-way-door rule, the `ken: speculative: <failure mode>; <likelihood>;
-  <cost>` callout line, and the carve-out for trust-boundary validation and a
+  <cost: lines, new state, new deps>` callout line, and the carve-out for trust-boundary validation and a
   hole you can demonstrate are ken's own. Not measured yet; no maintenance
   round probes it.
 

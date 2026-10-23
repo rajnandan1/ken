@@ -66,7 +66,7 @@ function getFallbackInstructions(mode) {
     'force-push over others\' commits, send code or data to a third party, or break a name used outside the repo, ' +
     'say `ken: irreversible: <action>; <what is lost>` and wait for the user\'s yes. ' +
     'Speculative hardening waits for a yes. Before you add complexity for a speculative or vanishingly unlikely race ' +
-    'or security edge case, say `ken: speculative: <failure mode>; <likelihood>; <cost>` and wait for the user\'s yes. ' +
+    'or security edge case, say `ken: speculative: <failure mode>; <likelihood>; <cost: lines, new state, new deps>` and wait for the user\'s yes. ' +
     'Trust-boundary validation and a hole you can demonstrate are not speculative. ' +
     'Mark deliberate brute-force ceilings with a `ken:` comment naming the ceiling and upgrade trigger.\n\n' +
     '## Output\n\n' +

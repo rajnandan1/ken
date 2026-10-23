@@ -72,9 +72,9 @@ Run it in order, on every task:
 - **Speculative hardening waits for a yes.** Harden for the failures the
   code will meet. Before you add complexity for a speculative or vanishingly
   unlikely race or security edge case, say
-  `ken: speculative: <failure mode>; <likelihood>; <cost>` and wait.
-  Trust-boundary validation and a hole you can demonstrate are not
-  speculative.
+  `ken: speculative: <failure mode>; <likelihood>; <cost: lines, new state, new deps>`
+  and wait. Trust-boundary validation and a hole you can demonstrate are
+  not speculative.
 - Mark deliberate brute-force ceilings with a `ken:` comment naming the
   ceiling and the upgrade trigger
   (`// ken: linear scan; sort + bisect when n > 10k measured`).
