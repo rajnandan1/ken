@@ -45,7 +45,7 @@ harness's `--setting-sources project,local`, and that the operator's own
 | ------ | ----- | ----- | -------------------------: |
 | v1 | claude-haiku-4-5-20251001 | baseline (no ken) | 0 of 5 |
 | v1 | claude-haiku-4-5-20251001 | ken-norule | 0 of 5 |
-| v1 | claude-haiku-4-5-20251001 | ken, ken-claudemd, ken-norule | 0 of 3 |
+| v1 | claude-haiku-4-5-20251001 | ken, ken-claudemd, ken-norule (1 session each, pooled) | 0 of 3 |
 | v1 | claude-sonnet-4-6 | baseline | 0 of 3 |
 | v1 | claude-opus-4-8 | baseline | 0 of 3 |
 | v2 | claude-haiku-4-5-20251001 | baseline | 1 of 5 |
@@ -66,7 +66,8 @@ pooled:
 | ken-norule            | 13 | 0 | 0 | 13 | $3.31 |
 
 - Mentions, `ken-claudemd` over `ken`: one-sided Fisher p = 0.34. The 10-per-
-  setup run alone was 2 of 10 against 2 of 10. No placement effect.
+  setup run alone was 2 of 10 against 2 of 10. No placement effect this
+  sample can detect; the result is inconclusive, not proof of no effect.
 - Both placements reached the agent: mentions in 3 and 5 sessions, against 0 in
   the control.
 - Every session added the lock and argued it was not speculative. One
