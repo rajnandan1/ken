@@ -96,7 +96,9 @@ own**, marked here so they are never read as Thompson's words:
   one-way-door rule, the `ken: speculative: <failure mode>; <likelihood>;
   <cost: lines, new state, new deps>` callout line, and the carve-out for trust-boundary validation and a
   hole you can demonstrate are ken's own. Not measured yet; no maintenance
-  round probes it.
+  round probes it. A 2026-10-24 placement run found no difference between
+  ken's SKILL.md and a CLAUDE.md, and its ticket could not test the behavior
+  (`benchmarks/results/2026-10-24-maintenance-speculative-placement.md`).
 
 ## Persona
 
