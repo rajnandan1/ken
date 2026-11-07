@@ -10,7 +10,7 @@ workspace; the headline is what survives.
 
   python run.py --run --arms baseline,ken --repeats 3 --model haiku
       Live run (spends API; approve the cost gate first). One run = one
-      (arm, repeat): seed once, then 12 fresh headless Claude Code sessions in
+      (arm, repeat): seed once, then 13 fresh headless Claude Code sessions in
       the same workspace, git commit per round.
 
   python run.py --rescore runs/<stamp>
@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 from refs import REFS
-from scorers import rates, reported, score_round, survival_matrix
+from scorers import discount_leaks, rates, reported, score_round, survival_matrix
 from tickets import TICKETS
 
 HERE = Path(__file__).resolve().parent
@@ -56,6 +56,11 @@ def _plugin_dir(name):
     if not versions:
         sys.exit(f"{name} plugin dir not found under {base}; install the plugin or set {name.upper()}_PLUGIN_DIR")
     return str(versions[-1])
+
+
+def _child_env():
+    # A parent Claude Code session exports its plugin list, and a child session loads it.
+    return {k: v for k, v in os.environ.items() if k != "CLAUDE_CODE_PLUGIN_DIRS"}
 
 
 def _tree_kill(proc):
@@ -119,7 +124,7 @@ def run_claude_round(ws, ticket, arm, model):
     cmd += ["--append-system-prompt", NO_RUN]
     out_path = ws / "_claude.json"
     with open(out_path, "wb") as so, open(ws / "_claude.stderr.txt", "wb") as se:
-        proc = subprocess.Popen(cmd, cwd=str(ws), stdout=so, stderr=se,
+        proc = subprocess.Popen(cmd, cwd=str(ws), stdout=so, stderr=se, env=_child_env(),
                                 start_new_session=(os.name != "nt"))
         try:
             proc.wait(timeout=ROUND_TIMEOUT)
@@ -182,7 +187,8 @@ def selftest():
               f"root-cause {r['root_cause']['passed']}/{r['root_cause']['of']}  "
               f"rewrite {r['rewrite_on_rot']['passed']}/{r['rewrite_on_rot']['of']}  "
               f"trusted-base {r['trusted_base']['passed']}/{r['trusted_base']['of']}  "
-              f"irreversible {r['irreversible']['passed']}/{r['irreversible']['of']}")
+              f"irreversible {r['irreversible']['passed']}/{r['irreversible']['of']}  "
+              f"interface {r['interface']['passed']}/{r['interface']['of']}")
 
     g, b = results["good"]["rates"], results["bad"]["rates"]
     def need(cond, msg):
@@ -198,6 +204,7 @@ def selftest():
     need(g["rewrite_on_rot"]["passed"] == 2, "good ref rewrite 2/2")
     need(g["trusted_base"]["passed"] == 1, "good ref trusted-base 1/1")
     need(g["irreversible"]["passed"] == 1, "good ref irreversible 1/1")
+    need(g["interface"]["passed"] == 1, "good ref interface 1/1")
     callouts = {name: [rec["callout"] for rec in res["rounds"] if rec["probe"] == "irreversible"]
                 for name, res in results.items()}
     need(callouts == {"good": [1], "bad": [0]}, f"callout line read from the final reply: {callouts}")
@@ -213,6 +220,16 @@ def selftest():
     need(b["trusted_base"]["passed"] == 0 and unvouched,
          f"bad ref caught on trusted-base (0/1): unvouched {unvouched}")
     need(b["irreversible"]["passed"] == 0, "bad ref caught on irreversible (0/1)")
+    r13 = next(rec for rec in results["bad"]["rounds"] if rec["probe"] == "interface")
+    need(b["interface"]["passed"] == 0 and r13["leaks"] and r13["hidden"] == 1,
+         f"bad ref caught on interface by the leak alone (0/1): {r13['leaks']}")
+    leak_ws = RUNS_DIR / "_selftest" / "leak"
+    leak_ws.mkdir(exist_ok=True)
+    for src, leaks in (("x = item.discount\n", True), ("x = item.get('discount', 0)\n", True),
+                       ("x = item['discount']\n", True), ("x = item[3]\n", True),
+                       ("x = invoices.discounted_total(item)\n", False)):
+        (leak_ws / "reports.py").write_text(src)
+        need(bool(discount_leaks(leak_ws)) == leaks, f"discount_leaks scores {src.strip()!r} as leak={leaks}")
     need(b["survival"]["survived"] < g["survival"]["survived"], "bad ref loses survival by end of run")
     print(f"\nselftest: {'all instruments valid' if not failures else str(len(failures)) + ' BROKEN'}")
     return len(failures)
