@@ -152,15 +152,16 @@ copy of one of the three kept workspaces, wrote `tests/test_r13.py`, and played
 one `run_claude_round`. The ken arms loaded `git archive` copies of `33ec27d`,
 and the candidate copy changed only `skills/ken/SKILL.md`. Every `CLAUDE*`
 variable was removed first, because this run started inside a Claude Code
-session that sets `CLAUDE_CODE_PLUGIN_DIRS`. `run.py` passes its environment to
-child sessions unchanged, and whether that variable leaks into them was not
-tested.
+session that sets `CLAUDE_CODE_PLUGIN_DIRS`. `run.py` passed its environment to
+child sessions unchanged. A later test showed the leak is real, and `518d149`
+fixed it.
 
 ## If someone retries
 
 The post describes a dedicated deepening pass over finished code, not an
 always-on clause. This round tested only the clause. The next candidate is one
 second session after round 13 that gets the prompt "deepen modules and simplify
-interfaces", scored by the same probe. Not run; features default to no.
+interfaces", scored by the same probe.
+[Iteration 7](2026-11-07-maintenance-v1_7-verdict.md) ran it.
 
 Raw data: `benchmarks/maintenance/runs/20261107-stage1/` (workspaces kept).
