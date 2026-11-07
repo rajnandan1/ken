@@ -5,11 +5,11 @@ played round 13.
 
 ## What changed
 
-A post by Chris (`@_khrus`) reports that the prompt "deepen modules and simplify
-interfaces" gives his best results: a deep module has a small interface that
-hides a lot of behavior. The idea is Ousterhout's, from _A Philosophy of Software
+A post on X reports that the prompt "deepen modules and simplify interfaces"
+gives its author's best results: a deep module has a small interface that hides
+a lot of behavior. The idea comes from the book _A Philosophy of Software
 Design_. The post carries no numbers. Five ideas from the post, its replies, and
-Matt Pocock's linked `DEEPENING.md` looked worth adding.
+a linked `DEEPENING.md` looked worth adding.
 
 1. **Instrument (kept regardless of verdict, unless Stage 1 finds the ticket
    does not tempt):** round 13, `r13-line-discount`, a new scored rate named
@@ -55,7 +55,7 @@ clauses 2 to 5 stay out of this candidate.
 
 Clauses 2 to 4 fit `/ken-review`, which loads on demand and reviews code no
 agent wrote this session. That is a separate change. None of the five is
-Thompson's: a KEEP adds a `PROVENANCE.md` note saying so and naming Ousterhout
+Thompson's: a KEEP adds a `PROVENANCE.md` note saying so and naming the book
 and `DEEPENING.md`.
 
 ## The probe
