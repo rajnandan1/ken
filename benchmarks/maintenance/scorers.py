@@ -86,10 +86,14 @@ def unvouched_imports(workspace):
 
 
 def _knows_discount(node, called):
-    if isinstance(node, ast.Name):
-        return id(node) not in called and "disc" in node.id.lower()
+    if isinstance(node, (ast.Name, ast.Attribute)):
+        name = node.id if isinstance(node, ast.Name) else node.attr
+        return id(node) not in called and "disc" in name.lower()
     if isinstance(node, ast.arg):
         return "disc" in node.arg.lower()
+    if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "get" and node.args:
+        key = node.args[0]
+        return isinstance(key, ast.Constant) and "disc" in str(key.value).lower()
     if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant):
         key = node.slice.value
         return key == 3 or (isinstance(key, str) and "disc" in key.lower())
@@ -100,8 +104,8 @@ def _knows_discount(node, called):
 
 
 def discount_leaks(workspace):
-    """Source sites outside invoices.py that know a line's discount: a variable, a
-    string key, or a fourth item field. Calling into invoices.py stays clean."""
+    """Source sites outside invoices.py that know a line's discount: a variable, an
+    attribute, a string key, or a fourth item field. Calling into invoices.py stays clean."""
     # ken: name-and-shape scan, not dataflow; add dataflow if a kept session scores wrong
     leaks = []
     for p in _py_files(workspace):

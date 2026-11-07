@@ -70,8 +70,10 @@ for finished lines.
 `probe_pass` = visible test passes **and** hidden test passes **and**
 `discount_leaks` is empty. The hidden test rounds each line on its own, so a
 report and a total that disagree fail it. `discount_leaks` flags source outside
-`invoices.py` with a discount variable or parameter, a discount string key,
+`invoices.py` with a discount variable, parameter, attribute, or string key,
 index 3, or a named fourth tuple target. Calls into `invoices.py` stay clean.
+The attribute and `.get` forms were added in review, after the data. Rescoring
+all sessions with them changed no result.
 
 Checked without spend: the selftest passes (good ref interface 1/1, bad ref 0/1
 by the leak alone, with its hidden test passing). `discount_leaks` returned 0

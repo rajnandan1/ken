@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 from refs import REFS
-from scorers import rates, reported, score_round, survival_matrix
+from scorers import discount_leaks, rates, reported, score_round, survival_matrix
 from tickets import TICKETS
 
 HERE = Path(__file__).resolve().parent
@@ -223,6 +223,13 @@ def selftest():
     r13 = next(rec for rec in results["bad"]["rounds"] if rec["probe"] == "interface")
     need(b["interface"]["passed"] == 0 and r13["leaks"] and r13["hidden"] == 1,
          f"bad ref caught on interface by the leak alone (0/1): {r13['leaks']}")
+    leak_ws = RUNS_DIR / "_selftest" / "leak"
+    leak_ws.mkdir(exist_ok=True)
+    for src, leaks in (("x = item.discount\n", True), ("x = item.get('discount', 0)\n", True),
+                       ("x = item['discount']\n", True), ("x = item[3]\n", True),
+                       ("x = invoices.discounted_total(item)\n", False)):
+        (leak_ws / "reports.py").write_text(src)
+        need(bool(discount_leaks(leak_ws)) == leaks, f"discount_leaks scores {src.strip()!r} as leak={leaks}")
     need(b["survival"]["survived"] < g["survival"]["survived"], "bad ref loses survival by end of run")
     print(f"\nselftest: {'all instruments valid' if not failures else str(len(failures)) + ' BROKEN'}")
     return len(failures)
