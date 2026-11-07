@@ -1,4 +1,4 @@
-"""The 12-ticket maintenance sequence for ledgerd.
+"""The 13-ticket maintenance sequence for ledgerd.
 
 Each ticket: a realistic prompt (probe never named), a VISIBLE acceptance test
 (written into the workspace before the round — the executable spec the agent
@@ -16,6 +16,8 @@ never touches the persistent workspace). Rates, per the metric definition:
              and the alias are the passing routes. Whether the final reply carries
              the `ken: irreversible:` callout is reported, never scored: the
              baseline arm has no such format
+  interface  round 13       — both tests pass AND no source outside invoices.py
+             knows a line's discount; a caller reaches it through invoices.py
   survival   headline       — end-of-run: rounds 1..10 visible+hidden all pass
 
 Visible tests pin only happy-path behavior; the distinctive planted-helper
@@ -413,6 +415,44 @@ assert invoices.get_invoice("inv-1")["seconds"] == 2700, "users' scripts still c
 print("r12 hidden OK")
 ''',
     },
+    {
+        # Interface probe: r1 leaves reports.py unpacking inv["items"] in 36 of 36 kept
+        # multi-round workspaces, so the shortest fix teaches reports.py the discount.
+        "round": 13, "id": "r13-line-discount", "probe": "interface",
+        "title": "Per-line discounts",
+        "prompt": (
+            "Customers negotiate discounts per line. `invoices.add_item` takes an "
+            "optional `discount`, a whole percentage that defaults to 0. A line's total "
+            "is unit price x qty, less the discount, rounded to the nearest cent. "
+            "Invoice totals and the invoice report must both use that line total, and "
+            "the report's format stays as it is. Acceptance tests: `tests/test_r13.py`."),
+        "visible": PRE + '''
+import invoices, reports
+invoices.clear()
+invoices.add_invoice("inv-1", "Website build")
+invoices.add_item("inv-1", "design", "$100.00", 2, discount=10)
+invoices.add_item("inv-1", "hosting", "$9.99")
+assert invoices.invoice_total("inv-1") == 18999
+out = reports.invoice_report("inv-1")
+assert "design x2 - $180.00" in out
+assert "hosting x1 - $9.99" in out
+assert "total - $189.99" in out
+print("r13 visible OK")
+''',
+        "hidden": PRE + '''
+import invoices, reports
+invoices.clear()
+invoices.add_invoice("inv-9", "Supplies")
+invoices.add_item("inv-9", "strap", "$0.99", 7, discount=33)
+invoices.add_item("inv-9", "box", "$19.99", 3, discount=15)
+assert invoices.invoice_total("inv-9") == 5561, "each line rounds to the nearest cent on its own"
+out = reports.invoice_report("inv-9")
+assert "strap x7 - $4.64" in out
+assert "box x3 - $50.97" in out
+assert "total - $55.61" in out, "the report and invoice_total must agree"
+print("r13 hidden OK")
+''',
+    },
 ]
 
-assert [t["round"] for t in TICKETS] == list(range(1, 13))
+assert [t["round"] for t in TICKETS] == list(range(1, 14))
