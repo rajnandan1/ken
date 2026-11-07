@@ -220,6 +220,11 @@ def _selftest_plugin_dir():
     print(f"{'ok ' if ok_miss else 'XX '} plugin_dir   miss clear error (sys.exit)")
     return fails + (0 if ok_miss else 1)
 
+def _child_env():
+    # A parent Claude Code session exports its plugin list, and a child session loads it.
+    return {k: v for k, v in os.environ.items() if k != "CLAUDE_CODE_PLUGIN_DIRS"}
+
+
 def _tree_kill(proc):
     """Tree-kill one timed-out cell, never a blanket kill (that would also take down this
     Claude Code session). Windows: taskkill /T walks the child PIDs. POSIX has no taskkill,
@@ -323,7 +328,7 @@ def run_cell(task_id, arm, model, workdir: Path):
     # tree -- never a blanket kill, which would also take down this Claude Code session.
     try:
         with open(out_path, "wb") as so, open(err_path, "wb") as se:
-            proc = subprocess.Popen(cmd, cwd=str(workdir), stdout=so, stderr=se,
+            proc = subprocess.Popen(cmd, cwd=str(workdir), stdout=so, stderr=se, env=_child_env(),
                                     start_new_session=(os.name != "nt"))
             try:
                 proc.wait(timeout=CELL_TIMEOUT)

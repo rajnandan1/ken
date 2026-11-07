@@ -58,6 +58,11 @@ def _plugin_dir(name):
     return str(versions[-1])
 
 
+def _child_env():
+    # A parent Claude Code session exports its plugin list, and a child session loads it.
+    return {k: v for k, v in os.environ.items() if k != "CLAUDE_CODE_PLUGIN_DIRS"}
+
+
 def _tree_kill(proc):
     if os.name == "nt":
         subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)],
@@ -119,7 +124,7 @@ def run_claude_round(ws, ticket, arm, model):
     cmd += ["--append-system-prompt", NO_RUN]
     out_path = ws / "_claude.json"
     with open(out_path, "wb") as so, open(ws / "_claude.stderr.txt", "wb") as se:
-        proc = subprocess.Popen(cmd, cwd=str(ws), stdout=so, stderr=se,
+        proc = subprocess.Popen(cmd, cwd=str(ws), stdout=so, stderr=se, env=_child_env(),
                                 start_new_session=(os.name != "nt"))
         try:
             proc.wait(timeout=ROUND_TIMEOUT)
