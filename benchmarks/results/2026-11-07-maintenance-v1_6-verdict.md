@@ -1,7 +1,7 @@
-# 2026-11-07: Iteration 6 verdict: PENDING. Interface probe (r13) and one candidate clause.
+# 2026-11-07: Iteration 6 verdict: REVERT clause 1, keep the probe. All three arms passed 0 of 10.
 
-The verdict rule below was committed before any data (see git history of this
-file). No live session has played round 13 yet.
+The verdict rule below was committed in `33ec27d`, before any live session
+played round 13.
 
 ## What changed
 
@@ -107,4 +107,60 @@ rate (no measured median exists yet), and the clone-density curve.
 
 ## Result
 
-Not run.
+Run `20261107-stage1`: Stage 1 only, claude-haiku-4-5-20251001, 10 sessions per
+arm, **$3.80** including $0.04 for three canary sessions.
+
+| Arm | interface passed | leaked | visible passed | hidden passed | cost |
+| --- | ---------------: | -----: | -------------: | ------------: | ---: |
+| baseline | 0 of 10 | 10 | 10 | 10 | $1.33 |
+| ken shipped | 0 of 10 | 10 | 10 | 10 | $1.14 |
+| ken v1.6 | 0 of 10 | 10 | 10 | 10 | $1.29 |
+
+**Pre-registered rule:** baseline at 0 of 10 keeps the ticket, and shipped ken at
+0 of 10 confirms the gap. The candidate against shipped ken is 0 against 0, so
+one-sided Fisher p = 1. **VERDICT: REVERT clause 1. Keep the probe. Stage 2 was
+not run. The shipped ruleset does not change.**
+
+## What the sessions did
+
+The canaries asked each arm to quote `Interfaces few and small`. Baseline had no
+such rule, shipped ken quoted the shipped text, and only the candidate quoted
+the clause. The clause reached the agent and did not change what it wrote.
+
+All 30 sessions passed both tests, so the code works. In the three diffs read
+in full, baseline wrote the same discount formula in `invoices.py` and
+`reports.py`.
+
+`discount_leaks` also flags a session that keeps the formula in one helper and
+passes `discount` to it, so the formula's location was counted after the data.
+This measure was not pre-registered and is not a keep criterion.
+
+| Arm | Formula stayed out of `reports.py` |
+| --- | ---------------------------------: |
+| baseline | 2 of 10 |
+| ken shipped | 1 of 10 |
+| ken v1.6 | 3 of 10 |
+
+Candidate against shipped ken is p = 0.29, so this softer measure shows no
+effect either. In those 6 sessions, `reports.py` still unpacks the item or reads
+its discount.
+
+## Setup notes
+
+The harness was a one-off and was not kept. Each session started from a fresh
+copy of one of the three kept workspaces, wrote `tests/test_r13.py`, and played
+one `run_claude_round`. The ken arms loaded `git archive` copies of `33ec27d`,
+and the candidate copy changed only `skills/ken/SKILL.md`. Every `CLAUDE*`
+variable was removed first, because this run started inside a Claude Code
+session that sets `CLAUDE_CODE_PLUGIN_DIRS`. `run.py` passes its environment to
+child sessions unchanged, and whether that variable leaks into them was not
+tested.
+
+## If someone retries
+
+The post describes a dedicated deepening pass over finished code, not an
+always-on clause. This round tested only the clause. The next candidate is one
+second session after round 13 that gets the prompt "deepen modules and simplify
+interfaces", scored by the same probe. Not run; features default to no.
+
+Raw data: `benchmarks/maintenance/runs/20261107-stage1/` (workspaces kept).
